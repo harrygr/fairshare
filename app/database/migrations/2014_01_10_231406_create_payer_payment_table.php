@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration {
+class CreatePayerPaymentTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,16 +12,15 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table) {
+		Schema::create('payer_payment', function(Blueprint $table) {
 			$table->increments('id');
-			
-			$table->string('username');
-			$table->string('password');
-			$table->string('email');
+			$table->integer('payer_id');
+			$table->integer('payment_id');
+			$table->decimal('amount', 10, 2);
+			$table->boolean('pays');
 			$table->timestamps();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -30,7 +29,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('payer_payment');
 	}
 
 }
