@@ -28,7 +28,7 @@ class UsersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function register() {
+	public function showRegister() {
 		return View::make('users.register');
 	}
 
@@ -37,7 +37,7 @@ class UsersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create() {
+	public function doRegister() {
 		$validator = Validator::make(Input::all(), User::$rules);
 
 		if ($validator->passes()) {
@@ -48,27 +48,27 @@ class UsersController extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
+			return Redirect::route('users.showLogin')->with('message', 'Thanks for registering! Login here.');
 		} else {
       // validation has failed, display error messages 
-			return Redirect::to('users/register')
+			return Redirect::route('users.showRegister')
 				->with('message', 'The following errors occurred')
 				->with('alert-class', 'alert-danger')
 				->withErrors($validator)->withInput();
 		}  
 	}
 
-	public function login() {
+	public function showLogin() {
 		return View::make('users.login');
 	}
 
-	public function signin(){
+	public function doLogin(){
 		if (Auth::attempt(array('username'=>Input::get('username'), 'password'=>Input::get('password')))) {
-			return Redirect::to('users/dashboard')
+			return Redirect::route('users.dashboard')
 				->with('message', 'You are now logged in!')
 				->with('alert-class', 'alert-success');
 		} else {
-			return Redirect::to('users/login')
+			return Redirect::route('users.showLogin')
 				->with('message', 'Your username/password combination was incorrect')
 				->with('alert-class', 'alert-danger')
 				->withInput();
@@ -77,7 +77,7 @@ class UsersController extends BaseController {
 
 	public function logout() {
 		Auth::logout();
-		return Redirect::to('users/login')
+		return Redirect::route('users.showLogin')
 			->with('message', 'You are now logged out!')
 			->with('alert-class', 'alert-success');
 	}

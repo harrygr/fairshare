@@ -15,19 +15,19 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('home');
 });
 
 Route::get('/users', array('uses' => 'UsersController@index'));
 
 
-
-Route::get('users/register', array('as' => 'users.register', 'uses' => 'UsersController@register'));
-Route::get('users/login', array('as' => 'users.login', 'uses' => 'UsersController@login'));
-Route::get('users/dashboard', array('as' => 'users.dashboard', 'uses' => 'UsersController@dashboard'));
-Route::get('users/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
-Route::post('users/create', array('uses' => 'UsersController@create'));
-Route::post('users/signin', array('uses' => 'UsersController@signin'));
+//User Routes
+Route::get('/register', array('as' => 'users.showRegister', 'uses' => 'UsersController@showRegister'));
+Route::get('/login', array('as' => 'users.showLogin', 'uses' => 'UsersController@showLogin'));
+Route::get('/dashboard', array('as' => 'users.dashboard', 'uses' => 'UsersController@dashboard'));
+Route::get('/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
+Route::post('/register', array('as' => 'users.doRegister', 'uses' => 'UsersController@doRegister'));
+Route::post('/login', array('as' => 'users.doLogin', 'uses' => 'UsersController@doLogin'));
 
 Route::group(array('before' => 'auth'), function(){
 	Route::get('payers/add', array('as' => 'payers.add', 'uses' => 'PayersController@add'));

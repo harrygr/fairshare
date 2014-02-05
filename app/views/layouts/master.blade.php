@@ -18,10 +18,10 @@
 
 		<ul class="nav navbar-nav">  
 			@if(!Auth::check())
-			<li>{{ HTML::link('users/register', 'Register') }}</li>   
-			<li>{{ HTML::link('users/login', 'Login') }}</li>   
+			<li>{{ HTML::linkRoute('users.showRegister', 'Register') }}</li>   
+			<li>{{ HTML::linkRoute('users.showLogin', 'Login') }}</li>   
 			@else
-			<li>{{ HTML::link('users/logout', 'Logout') }}</li>
+			<li>{{ HTML::linkRoute('users.logout', 'Logout') }}</li>
 			@endif 
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Payers <b class="caret"></b></a>
@@ -38,6 +38,7 @@
 
 				</ul>
 			</li>
+			<li>{{ HTML::link('/statement', 'Statement') }}</li>
 		</ul>  
 
 	</nav> 

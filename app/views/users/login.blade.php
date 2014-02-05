@@ -3,10 +3,8 @@
 @section('content')
 <div class="row">
    <div class="col-md-6">
-      {{ Form::open(array('url'=>'users/signin', 'class'=>'form-signin')) }}
+      {{ Form::open(array('route'=>'users.doLogin', 'class'=>'form-signin')) }}
       <h2 class="form-signup-heading">Log In Here</h2>
-
-
 
       <div class="form-group">
          {{ Form::text('username', null, array('class'=>'form-control', 'placeholder'=>'Name')) }}

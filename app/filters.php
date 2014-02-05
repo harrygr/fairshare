@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('users/login')
+	if (Auth::guest()) return Redirect::guest('/login')
 		->with('message', 'You must be logged in to access this area.')
 		->with('alert-class', 'alert-danger');
 });

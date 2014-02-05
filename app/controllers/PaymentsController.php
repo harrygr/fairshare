@@ -64,7 +64,7 @@ class PaymentsController extends BaseController {
 				->withErrors($validator)->withInput();
 		}
 		} else {
-			return Redirect::to('users/login')
+			return Redirect::route('users.showLogin')
 			->with('message', 'You need to be logged in to do that!')
 			->with('alert-class', 'alert-danger');
 		}  
@@ -114,18 +114,16 @@ class PaymentsController extends BaseController {
 		//
 	}
 	public function statement(){
-		//$payments = Payment::find(9)->payers->toArray();
+
 		$payments_data = Payment::with('payers')->get()->toArray();
 		$payment_data = Helper::process_payment($payments_data);
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-		//foreach ($payments as $payment){
-		//Helper::pr($payment_data['totals']);	
-		//Helper::pr($payers);	
+
 		return View::make('payments.statement')
-		->with('payments', $payment_data['payments'])
-		->with('payment_totals', $payment_data['totals'])
-		->with('payers', $payers);
-		//}
+			->with('payments', $payment_data['payments'])
+			->with('payment_totals', $payment_data['totals'])
+			->with('payers', $payers);
+
 		
 	}
 
