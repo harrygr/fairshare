@@ -9,7 +9,7 @@ class PaymentsController extends BaseController {
 	 */
 	public function index()
 	{
-        return View::make('payments.index');
+		return View::make('payments.index');
 	}
 
 	/**
@@ -21,7 +21,7 @@ class PaymentsController extends BaseController {
 	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 
-        return View::make('payments.add')->with('payers', $payers);
+		return View::make('payments.add')->with('payers', $payers);
 	}
 
 	/**
@@ -32,7 +32,7 @@ class PaymentsController extends BaseController {
 	public function store()
 	{
 		$validator = Validator::make(Input::all(), Payment::$rules);
-		if (Auth::check()){
+
 		if ($validator->passes()) {
       // validation has passed, save payment in DB
 			$payment = new Payment;
@@ -43,31 +43,28 @@ class PaymentsController extends BaseController {
 
 			//Save the amount each payer paid
 			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-			
+
 			foreach ($payers as $payer){
 				$payment_payer = new PayerPayment;
 				$payment_payer->payment_id = $payment->id;
 				$payment_payer->payer_id = $payer->id;
-				$payment_payer->amount = Input::get($payer->id . '-amount');
+				
+				$payment_payer->amount = Input::get($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0;
 
 				$payment_payer->pays = Input::has($payer->id . '-pays');
 				$payment_payer->save();
 			}
 
 
-			return Redirect::to('payers/')->with('message', 'Payment Added!');
+			return Redirect::to('statment')->with('message', 'Payment Added!');
 		} else {
       // validation has failed, display error messages 
 			return Redirect::to('payments/add')
-				->with('message', 'The following errors occurred')
-				->with('alert-class', 'alert-danger')
-				->withErrors($validator)->withInput();
+			->with('message', 'The following errors occurred')
+			->with('alert-class', 'alert-danger')
+			->withErrors($validator)->withInput();
 		}
-		} else {
-			return Redirect::route('users.showLogin')
-			->with('message', 'You need to be logged in to do that!')
-			->with('alert-class', 'alert-danger');
-		}  
+		
 	}
 
 	/**
@@ -78,7 +75,7 @@ class PaymentsController extends BaseController {
 	 */
 	public function show($id)
 	{
-        return View::make('payments.show');
+		return View::make('payments.show');
 	}
 
 	/**
@@ -89,7 +86,7 @@ class PaymentsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-        return View::make('payments.edit');
+		return View::make('payments.edit');
 	}
 
 	/**
@@ -115,14 +112,31 @@ class PaymentsController extends BaseController {
 	}
 	public function statement(){
 
-		$payments_data = Payment::with('payers')->get()->toArray();
-		$payment_data = Helper::process_payment($payments_data);
+		$payment_data = Payment::with('payers')->get()->toArray();
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		//Give each item in the payers object its appropriate payer id
+		foreach ($payers as $payer){
+			$payers_tmp[$payer->id] = $payer;
+		}
+		$payers = $payers_tmp;
+		unset($payers_tmp);
 
+
+		if ( $payment_data ) {
+			$payment_data = Helper::process_payment($payment_data);
+		} else {
+			$payment_data['payments'] = array();
+			$payment_data['totals'] = array();
+			Session::flash('message', 'There are no payments');
+			Session::flash('alert-class', 'alert-warning');
+		}
+		//Helper::pr($payers);
+		$settles = Helper::settleUp($payment_data['totals']);
 		return View::make('payments.statement')
-			->with('payments', $payment_data['payments'])
-			->with('payment_totals', $payment_data['totals'])
-			->with('payers', $payers);
+		->with('payments', $payment_data['payments'])
+		->with('payment_totals', $payment_data['totals'])
+		->with('payers', $payers)
+		->with(compact('settles'));
 
 		
 	}

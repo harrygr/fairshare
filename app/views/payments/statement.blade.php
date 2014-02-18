@@ -19,10 +19,12 @@ Payments
     			<th>Date</th>
     			<th>Company</th>
     			<th>Item</th>
+    			<?php $shaded = true; ?>
     			@foreach ($payers as $payer)
-				<th>Paid</th>
-				<th>Fair Share</th>
-				<th>Owes</th>
+				<th class="{{ $shaded ? 'active' : '' }}">Paid</th>
+				<th class="{{ $shaded ? 'active' : '' }}">Fair Share</th>
+				<th class="{{ $shaded ? 'active' : '' }}">Owes</th>
+				<?php $shaded = !$shaded; ?>
     			@endforeach
     		</tr>
 
@@ -33,16 +35,18 @@ Payments
 				<td>{{ $payment['payment_date'] }}</td>
 				<td>{{ $payment['company'] }}</td>
 				<td>{{ $payment['item'] }}</td>
+				<?php $shaded = true; ?>
 				@foreach ($payers as $payer)
 					@if ( isset($payment['payers'][$payer->id]) )
-					<td>{{ $payment['payers'][$payer->id]['pivot']['amount'] }}</td>
-					<td>{{ $payment['payers'][$payer->id]['pivot']['fair_share'] }}</td>
-					<td>{{ $payment['payers'][$payer->id]['pivot']['owes'] }}</td>
+					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['amount'], 2) }}</td>
+					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['fair_share'], 2) }}</td>
+					<td class="{{ $shaded ? 'active' : '' }} {{ $payment['payers'][$payer->id]['pivot']['owes'] > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['owes'], 2) }}</td>
 					@else
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
+					<td class="{{ $shaded ? 'active' : '' }}">0.00</td>
+					<td class="{{ $shaded ? 'active' : '' }}">0.00</td>
+					<td class="{{ $shaded ? 'active' : '' }}">0.00</td>
 					@endif
+					<?php $shaded = !$shaded; ?>
 				@endforeach
 			</tr>
     		@endforeach
@@ -50,17 +54,19 @@ Payments
     	</tbody>
     	<tfoot>
     		<tr>
-    			<td colspan="3" >Totals</td>
+    			<th colspan="3" >Totals</th>
+    			<?php $shaded = true; ?>
     			@foreach ($payers as $payer)
 					@if ( isset($payment_totals[$payer->id]) )
-					<td>{{ $payment_totals[$payer->id]['amount'] }}</td>
-					<td>{{ $payment_totals[$payer->id]['fair_share'] }}</td>
-					<td>{{ $payment_totals[$payer->id]['owes'] }}</td>
+					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment_totals[$payer->id]['amount'], 2) }}</th>
+					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment_totals[$payer->id]['fair_share'], 2) }}</th>
+					<th class="{{ $shaded ? 'active' : '' }} {{ $payment_totals[$payer->id]['owes'] > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($payment_totals[$payer->id]['owes'], 2) }}</th>
 					@else
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
+					<th>0.00</th>
+					<th>0.00</th>
+					<th>0.00</th>
 					@endif
+					<?php $shaded = !$shaded; ?>
 				@endforeach
     		</tr>
     	</tfoot>
@@ -72,7 +78,12 @@ Payments
 @stop
 
 @section('sidebar')
-	<ul>
-		<li>sidebar</li>
-	</ul>
+    <h2>Settle Up</h2>
+    @if ($settles)
+        <ul>
+        @foreach ($settles as $s)
+        <li>{{ $payers[$s['from']]->name }} pays {{ $payers[$s['to']]->name }} {{ number_format($s['amount'], 2) }}</li>
+        @endforeach
+        </ul>
+    @endif
 @stop

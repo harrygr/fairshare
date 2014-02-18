@@ -24,12 +24,16 @@
       <div class="form-group">
          {{ Form::text('item', null, array('class'=>'form-control', 'placeholder'=>'Item')) }}
       </div>
-
+      
       @foreach ($payers as $payer)
+      <div class="form-inline">
       <div class="form-group">
-         {{ Form::input('number', $payer->id . '-amount', null, array('class'=>'form-control', 'placeholder'=> $payer->name)) }}
-         {{ Form::checkbox($payer->id . '-pays', null, array('class'=>'form-control')) }}
+         {{ Form::label($payer->id . '-amount', $payer->name) }} <br>
+         {{ Form::input('number', $payer->id . '-amount', null, array('class'=>'form-control', 'step' => 'any', 'value' => 0)) }}
+         {{ Form::checkbox($payer->id . '-pays', null, array('class'=>'form-control', 'label'=>'pays')) }}
+         {{ Form::label($payer->id . '-pays', 'pays') }} 
       </div>
+   </div>
       @endforeach
 
 
