@@ -9,10 +9,10 @@ class PayersController extends BaseController {
 	 */
 	public function index()
 	{
-        $payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 
-        return View::make('payers.index')
-        ->with('payers', $payers);
+		return View::make('payers.index')
+		->with('payers', $payers);
 	}
 
 	/**
@@ -22,7 +22,7 @@ class PayersController extends BaseController {
 	 */
 	public function add()
 	{
-        return View::make('payers.add');
+		return View::make('payers.add');
 	}
 
 	/**
@@ -34,22 +34,24 @@ class PayersController extends BaseController {
 	{
 		$validator = Validator::make(Input::all(), Payer::$rules);
 		if (Auth::check()){
-		if ($validator->passes()) {
+			if ($validator->passes()) {
       // validation has passed, save user in DB
-			$payer = new Payer;
-			$payer->name = Input::get('name');
-			$payer->email = Input::get('email');
-			$payer->user_id = Auth::user()->id;
-			$payer->save();
+				$payer = new Payer;
+				$payer->name = Input::get('name');
+				$payer->email = Input::get('email');
+				$payer->user_id = Auth::user()->id;
+				$payer->save();
 
-			return Redirect::to('payers/')->with('message', 'Payer Added!');
-		} else {
+				return Redirect::to('payers/')
+				->with('message', 'Payer Added!')
+				->with('alert-class', 'alert-success');
+			} else {
       // validation has failed, display error messages 
-			return Redirect::to('payers/add')
+				return Redirect::to('payers/add')
 				->with('message', 'The following errors occurred')
 				->with('alert-class', 'alert-danger')
 				->withErrors($validator)->withInput();
-		}
+			}
 		} else {
 			return Redirect::to('users/login')
 			->with('message', 'You need to be logged in to do that!')
@@ -67,8 +69,8 @@ class PayersController extends BaseController {
 	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 
-        return View::make('payers.show')
-        ->with('payers', $payers);
+		return View::make('payers.show')
+		->with('payers', $payers);
 	}
 
 	/**
@@ -77,9 +79,11 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit(Payer $payer)
 	{
-        return View::make('payers.edit');
+		
+		return View::make('payers.edit')
+		->with(compact('payer'));
 	}
 
 	/**
@@ -88,9 +92,32 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+		$validator = Validator::make(Input::all(), Payer::$rules);
+		if (Auth::check()){
+			if ($validator->passes()) {
+      // validation has passed, save user in DB
+				$payer = Payer::find(Input::get('id'));
+				$payer->name = Input::get('name');
+				$payer->email = Input::get('email');
+				$payer->save();
+
+				return Redirect::to('payers/')
+				->with('message', 'Payer Updated!')
+				->with('alert-class', 'alert-success');
+			} else {
+      // validation has failed, display error messages 
+				return Redirect::route('payers.edit', Input::get('id') )
+				->with('message', 'The following errors occurred')
+				->with('alert-class', 'alert-danger')
+				->withErrors($validator)->withInput();
+			}
+		} else {
+			return Redirect::to('users/login')
+			->with('message', 'You need to be logged in to do that!')
+			->with('alert-class', 'alert-danger');
+		}  
 	}
 
 	/**

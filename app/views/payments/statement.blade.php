@@ -7,15 +7,16 @@ Payments
  
 @section('content')
     <h1>Statement</h1>
-    <table class='table'>
+    <table class='table table-condensed'>
     	<thead>
     		<tr>
-    			<th colspan='3'></th>
+    			<th colspan='4'></th>
     			@foreach ($payers as $payer)
 				<th colspan='3' id="payer-{{ $payer->id }}">{{ $payer->name }}</th>
     			@endforeach
     		</tr>
     		<tr>
+                <th>Action</th>
     			<th>Date</th>
     			<th>Company</th>
     			<th>Item</th>
@@ -32,6 +33,12 @@ Payments
     	<tbody>
     		@foreach ($payments as $payment)
 			<tr>
+                <td>
+                    <div class="btn-toolbar inline">
+                    {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="glyphicon glyphicon-pencil"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
+                    {{ Helper::deleteResource('payments/'.$payment['id'], '<i class="glyphicon glyphicon-remove"></i>') }}
+                    </div>
+                </td>
 				<td>{{ $payment['payment_date'] }}</td>
 				<td>{{ $payment['company'] }}</td>
 				<td>{{ $payment['item'] }}</td>
@@ -54,7 +61,7 @@ Payments
     	</tbody>
     	<tfoot>
     		<tr>
-    			<th colspan="3" >Totals</th>
+    			<th colspan="4" >Totals</th>
     			<?php $shaded = true; ?>
     			@foreach ($payers as $payer)
 					@if ( isset($payment_totals[$payer->id]) )

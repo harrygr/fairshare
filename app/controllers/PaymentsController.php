@@ -24,6 +24,8 @@ class PaymentsController extends BaseController {
 		return View::make('payments.add')->with('payers', $payers);
 	}
 
+
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -43,23 +45,20 @@ class PaymentsController extends BaseController {
 
 			//Save the amount each payer paid
 			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-
+		
 			foreach ($payers as $payer){
-				$payment_payer = new PayerPayment;
-				$payment_payer->payment_id = $payment->id;
-				$payment_payer->payer_id = $payer->id;
-				
-				$payment_payer->amount = Input::get($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0;
-
-				$payment_payer->pays = Input::has($payer->id . '-pays');
-				$payment_payer->save();
+				$sync_data[$payer->id] = array(
+					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
+					'pays'  => Input::has($payer->id . '-pays')
+					);
 			}
+			$payment->payers()->sync($sync_data);
 
-
-			return Redirect::to('statment')->with('message', 'Payment Added!');
+			
+			return Redirect::route('payments.statement')->with('message', 'Payment Added!');
 		} else {
       // validation has failed, display error messages 
-			return Redirect::to('payments/add')
+			return Redirect::route('payments.add')
 			->with('message', 'The following errors occurred')
 			->with('alert-class', 'alert-danger')
 			->withErrors($validator)->withInput();
@@ -73,9 +72,15 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
+	public function show($id) {
 		return View::make('payments.show');
+	}
+
+	public function delete(Payment $payment){
+
+		PayerPayment::where('payment_id', '=', $payment->id)->delete();
+		$payment->delete();
+		return Redirect::route('payments.statement')->with('message', 'Payment Deleted');
 	}
 
 	/**
@@ -84,9 +89,23 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		return View::make('payments.edit');
+	public function edit(Payment $payment) {
+		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		$payer_payments = PayerPayment::where('payment_id', '=', $payment->id)->get();
+
+		$pps = array();
+		foreach ($payer_payments as $payer_payment){
+			$pps[$payer_payment->payer_id] = array(
+				'amount' => $payer_payment->amount,
+				'pays'	=> $payer_payment->pays,
+				);
+		}
+		
+		return View::make('payments.edit')
+		->with('id', $payment->id)
+		->with(compact('payers'))
+		->with(compact('payment'))
+		->with(compact('pps'));
 	}
 
 	/**
@@ -95,9 +114,39 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($payment)
 	{
-		//
+		$validator = Validator::make(Input::all(), Payment::$rules);
+
+		if ($validator->passes()) {
+
+			//Save the base payment data
+			$payment->payment_date = Input::get('payment_date');
+			$payment->company = Input::get('company');
+			$payment->item = Input::get('item');
+			$payment->save();
+
+			//Save the amount each payer paid
+			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		
+			foreach ($payers as $payer){
+				$sync_data[$payer->id] = array(
+					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
+					'pays'  => Input::has($payer->id . '-pays')
+					);
+			}
+			$payment->payers()->sync($sync_data);
+			return Redirect::route('payments.statement')
+			->with('message', 'Payment Edited!')
+			->with('alert-class', 'alert-success');
+
+		} else {
+			return Redirect::route('payments.edit')
+			->with('message', 'Validation Errors Occurred')
+			->with('alert-class', 'alert-danger')
+			->withErrors($validator)->withInput();
+		}
+
 	}
 
 	/**

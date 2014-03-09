@@ -27,7 +27,7 @@ class Helper {
 						);
 				}
 			}
-			$fair_share = $pmt_sum / $pyrs_sum;
+			$fair_share = $pyrs_sum > 0 ? $pmt_sum / $pyrs_sum : 0;
 			$payments[$pmt_id]['total'] = $pmt_sum;
 			$payments[$pmt_id]['fair_share'] = $fair_share;
 
@@ -60,6 +60,7 @@ class Helper {
 */
 public static function settleUp($totals) {
 	    //self::pr($totals);
+	$payments = array();
 	$amount = 0.11; $i = 1;
 	while ( $amount > 0.1 || $amount < -0.1 ){
 		$min = 0;
@@ -92,6 +93,27 @@ public static function settleUp($totals) {
 	}
 		//self::pr($payments);
 	return $payments;
+}
+
+public static function deleteResource($url, $button_label='Delete',$form_parameters = array(),$button_options=array('class' => 'btn btn-link')){
+
+	$id = camel_case($url);
+
+	if(empty($form_parameters)){
+		$form_parameters = array(
+			'method'=>'DELETE',
+			'class' =>'delete-form confirm-form',
+			'url'   => $url,
+			'id'	=> $id
+			);
+	}else{
+		$form_parameters['url'] = $url;
+		$form_parameters['method'] = 'DELETE';
+	};
+
+	return Form::open($form_parameters)
+	. '<button type="submit" class="' . $button_options['class'] . '">' . $button_label . '</button>'
+	. Form::close();
 }
 
 }

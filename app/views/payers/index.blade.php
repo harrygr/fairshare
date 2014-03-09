@@ -6,7 +6,7 @@
 
 	<ul class="list-group">
     @foreach($payers as $payer)
-        <li class="list-group-item">{{ $payer->name }} <span class="badge">{{ $payer->email }}</span></li>
+        <li class="list-group-item">{{ HTML::linkRoute('payers.edit', $payer->name, array($payer->id) ) }} <span class="badge">{{ $payer->email }}</span></li>
     @endforeach
     </ul>
 
