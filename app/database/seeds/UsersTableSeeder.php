@@ -10,15 +10,17 @@ class UsersTableSeeder extends Seeder {
 		$now = date('Y-m-d H:i:s');
 
 		$users = array(
-			array( 'username'=>'mackay',
+			array( 
+			 'username'=>'example',
 			 'email' => 'lary@marpay.com',
-			 'password' => Hash::make('mackay'),
+			 'password' => Hash::make('example'),
 			 'created_at' => $now,
 			 'updated_at' => $now,
 			 ),
-			array( 'username'=>'onslow',
-			 'email' => 'lary@marpay.com',
-			 'password' => Hash::make('onslow'),
+			array( 
+			 'username'=>'example2',
+			 'email' => 'lary@marpayly.com',
+			 'password' => Hash::make('example2'),
 			 'created_at' => $now,
 			 'updated_at' => $now,
 			 )

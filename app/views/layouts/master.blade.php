@@ -83,7 +83,6 @@
 				@yield('content')
 			</div>
 			<div class="col-md-3">
-				<h2>Sidebar</h2>
 				@yield('sidebar')
 			</div>
 		</div>

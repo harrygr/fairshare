@@ -36,6 +36,25 @@ class PaymentsController extends BaseController {
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
 		if ($validator->passes()) {
+		    
+		    $payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		    $has_payer = false;
+		    //Prepare the join table data
+		    foreach ($payers as $payer){
+				$sync_data[$payer->id] = array(
+					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
+					'pays'  => Input::has($payer->id . '-pays')
+					);
+				if ( Input::has($payer->id . '-pays') ) $has_payer = true;
+			}
+			//Ensure at least one person is a payer
+			if (!$has_payer) {
+			    return Redirect::route('payments.add')
+        			->with('message', 'At least one person needs to be a payer')
+        			->with('alert-class', 'alert-danger')
+        			->withInput();
+			}
+			
       // validation has passed, save payment in DB
 			$payment = new Payment;
 			$payment->payment_date = Input::get('payment_date');
@@ -44,18 +63,11 @@ class PaymentsController extends BaseController {
 			$payment->save();
 
 			//Save the amount each payer paid
-			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-		
-			foreach ($payers as $payer){
-				$sync_data[$payer->id] = array(
-					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
-					'pays'  => Input::has($payer->id . '-pays')
-					);
-			}
 			$payment->payers()->sync($sync_data);
-
 			
-			return Redirect::route('payments.statement')->with('message', 'Payment Added!');
+			return Redirect::route('payments.statement')
+			    ->with('message', 'Payment Added!')
+			    ->with('alert-class', 'alert-success');
 		} else {
       // validation has failed, display error messages 
 			return Redirect::route('payments.add')
@@ -119,6 +131,24 @@ class PaymentsController extends BaseController {
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
 		if ($validator->passes()) {
+		    
+		    //Prepare the join table data
+		    $payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		    $has_payer = false;
+		    foreach ($payers as $payer){
+				$sync_data[$payer->id] = array(
+					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
+					'pays'  => Input::has($payer->id . '-pays')
+					);
+				if ( Input::has($payer->id . '-pays') ) $has_payer = true;
+			}
+			//Ensure at least one person is a payer
+			if (!$has_payer) {
+			    return Redirect::route('payments.edit', array($payment->id))
+        			->with('message', 'At least one person needs to be a payer')
+        			->with('alert-class', 'alert-danger')
+        			->withInput();
+			}
 
 			//Save the base payment data
 			$payment->payment_date = Input::get('payment_date');
@@ -127,21 +157,14 @@ class PaymentsController extends BaseController {
 			$payment->save();
 
 			//Save the amount each payer paid
-			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-		
-			foreach ($payers as $payer){
-				$sync_data[$payer->id] = array(
-					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
-					'pays'  => Input::has($payer->id . '-pays')
-					);
-			}
 			$payment->payers()->sync($sync_data);
+			
 			return Redirect::route('payments.statement')
-			->with('message', 'Payment Edited!')
-			->with('alert-class', 'alert-success');
-
+    			->with('message', 'Payment Edited!')
+    			->with('alert-class', 'alert-success');
 		} else {
-			return Redirect::route('payments.edit')
+		    //Validator failed
+			return Redirect::route('payments.edit', array($payment->id))
 			->with('message', 'Validation Errors Occurred')
 			->with('alert-class', 'alert-danger')
 			->withErrors($validator)->withInput();
@@ -161,33 +184,48 @@ class PaymentsController extends BaseController {
 	}
 	public function statement(){
 
-		$payment_data = Payment::with('payers')->get()->toArray();
-		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
-		//Give each item in the payers object its appropriate payer id
-		foreach ($payers as $payer){
-			$payers_tmp[$payer->id] = $payer;
-		}
-		$payers = $payers_tmp;
-		unset($payers_tmp);
+		$payments = Payment::whereHas('payers', function($q){
+		   $q->where('user_id', '=', Auth::user()->id); 
+		},'>=', DB::raw('1'))->get();
+		
+		//lazy eager load the pivot data
+		$payment_data = $payments->load(array(
+        'payers' => function($q){
+           $q->where('user_id', '=', Auth::user()->id);
+        }))
+        ->toArray();
 
+       $payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		
+		
+		if(count($payers) > 0) :
+    		//Give each item in the payers object its appropriate payer id
+    		foreach ($payers as $payer){
+    			$payers_tmp[$payer->id] = $payer;
+    		}
+    		$payers = $payers_tmp;
+    		unset($payers_tmp);
+        else :
+            $payers = null;
+        endif;
 
 		if ( $payment_data ) {
 			$payment_data = Helper::process_payment($payment_data);
 		} else {
 			$payment_data['payments'] = array();
 			$payment_data['totals'] = array();
-			Session::flash('message', 'There are no payments');
+			Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
 			Session::flash('alert-class', 'alert-warning');
 		}
 		//Helper::pr($payers);
 		$settles = Helper::settleUp($payment_data['totals']);
+	
 		return View::make('payments.statement')
 		->with('payments', $payment_data['payments'])
 		->with('payment_totals', $payment_data['totals'])
 		->with('payers', $payers)
 		->with(compact('settles'));
 
-		
 	}
 
 }

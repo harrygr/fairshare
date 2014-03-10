@@ -3,7 +3,7 @@
 @section('content')
 <h2>Edit Payer</h2>
 
-{{ Form::model($payer, array('route'=> array('payers.update', $payer), 'class'=>'form-signup', 'method' => 'put')) }}
+{{ Form::model($payer, array('route'=> array('payers.update', $payer->id), 'class'=>'form-signup', 'method' => 'put')) }}
 
 <ul>
 	@foreach($errors->all() as $error)

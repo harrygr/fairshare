@@ -92,13 +92,13 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update()
+	public function update(Payer $payer)
 	{
 		$validator = Validator::make(Input::all(), Payer::$rules);
 		if (Auth::check()){
 			if ($validator->passes()) {
       // validation has passed, save user in DB
-				$payer = Payer::find(Input::get('id'));
+				//$payer = Payer::find(Input::get('id'));
 				$payer->name = Input::get('name');
 				$payer->email = Input::get('email');
 				$payer->save();

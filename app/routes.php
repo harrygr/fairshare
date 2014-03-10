@@ -57,5 +57,5 @@ Route::group(array('before' => array('auth', 'csrf')), function(){
 	Route::put('payments/update/{payment}', array('as' => 'payments.update', 'uses' => 'PaymentsController@update'));
 
 	Route::post('payers/store', array('as' => 'payers.store', 'uses' => 'PayersController@store'));
-	Route::put('payers/update', array('as' => 'payers.update', 'uses' => 'PayersController@update'));
+	Route::put('payers/update/{payer}', array('as' => 'payers.update', 'uses' => 'PayersController@update'));
 });

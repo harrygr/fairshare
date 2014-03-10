@@ -7,6 +7,8 @@ Payments
  
 @section('content')
     <h1>Statement</h1>
+    
+    @if (count($payers))
     <table class='table table-condensed'>
     	<thead>
     		<tr>
@@ -34,7 +36,7 @@ Payments
     		@foreach ($payments as $payment)
 			<tr>
                 <td>
-                    <div class="btn-toolbar inline">
+                    <div class="action-cell">
                     {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="glyphicon glyphicon-pencil"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
                     {{ Helper::deleteResource('payments/'.$payment['id'], '<i class="glyphicon glyphicon-remove"></i>') }}
                     </div>
@@ -79,18 +81,21 @@ Payments
     	</tfoot>
 
     </table>
-    @foreach ($payments as $payment)
-    	
-    @endforeach
+    @else
+    <p>No payers yet. {{ HTML::linkRoute('payers.add', 'Add a Payer') }}</p>
+    @endif
 @stop
 
 @section('sidebar')
+    
     <h2>Settle Up</h2>
-    @if ($settles)
+    @if ( $settles && count($payers) )
         <ul>
         @foreach ($settles as $s)
         <li>{{ $payers[$s['from']]->name }} pays {{ $payers[$s['to']]->name }} {{ number_format($s['amount'], 2) }}</li>
         @endforeach
         </ul>
+    @else
+    <p>All square!</p>
     @endif
 @stop
