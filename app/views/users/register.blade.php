@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Register
+@stop
+
 @section('content')
 <div class="row">
    <div class="col-md-6">

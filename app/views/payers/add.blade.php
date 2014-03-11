@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Add Payer
+@stop
+
 @section('content')
 <div class="row">
    <div class="col-md-6">

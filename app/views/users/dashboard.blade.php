@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Dashboard
+@stop
+
 @section('content')
 <h1>Dashboard for {{ Auth::User()->username }}</h1>
 

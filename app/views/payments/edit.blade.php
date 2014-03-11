@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Edit Payment
+@stop
+
 @section('content')
 
 

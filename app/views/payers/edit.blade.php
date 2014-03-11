@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Edit Payer
+@stop
+
 @section('content')
 <h2>Edit Payer</h2>
 

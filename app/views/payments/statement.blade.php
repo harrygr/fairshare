@@ -1,15 +1,15 @@
 @extends('layouts.master')
 
 @section('title')
-@parent
-Payments
+Statement
 @stop
  
 @section('content')
     <h1>Statement</h1>
     
     @if (count($payers))
-    <table class='table table-condensed'>
+    <div class="table-responsive">
+    <table class='table table-condensed' style='font-size:85%;'>
     	<thead>
     		<tr>
     			<th colspan='4'></th>
@@ -81,6 +81,7 @@ Payments
     	</tfoot>
 
     </table>
+</div>
     @else
     <p>No payers yet. {{ HTML::linkRoute('payers.add', 'Add a Payer') }}</p>
     @endif

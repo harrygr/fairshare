@@ -29,7 +29,9 @@
       {{ Form::input('number', $payer->id . '-amount', $amount, array('class'=>'form-control', 'step' => 'any', 'value' => 0)) }}
       {{ Form::checkbox($payer->id . '-pays', $payer->id . '-pays', $pays) }}
       {{ Form::label($payer->id . '-pays', 'pays') }}
+
    </div>
 </div>
+ <br/>
 @endforeach
 
