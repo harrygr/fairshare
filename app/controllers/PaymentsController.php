@@ -24,6 +24,12 @@ class PaymentsController extends BaseController {
 		return View::make('payments.add')->with('payers', $payers);
 	}
 
+    public function add_reimbursement()
+	{
+		$payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
+
+		return View::make('payments.reimburse')->with('payers', $payers);
+	}
 
 
 	/**

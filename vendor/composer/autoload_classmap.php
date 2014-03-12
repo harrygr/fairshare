@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreatePagesTable' => $baseDir . '/app/database/migrations/2014_03_11_150303_create_pages_table.php',
     'CreatePayerPaymentTable' => $baseDir . '/app/database/migrations/2014_01_10_231406_create_payer_payment_table.php',
     'CreatePayersTable' => $baseDir . '/app/database/migrations/2014_01_08_212711_create_payers_table.php',
     'CreatePaymentsTable' => $baseDir . '/app/database/migrations/2014_01_04_132500_create_payments_table.php',
@@ -15,6 +16,7 @@ return array(
     'Helper' => $baseDir . '/app/library/Helper.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'Page' => $baseDir . '/app/models/Page.php',
     'Payer' => $baseDir . '/app/models/Payer.php',
     'PayerPayment' => $baseDir . '/app/models/PayerPayment.php',
     'PayersController' => $baseDir . '/app/controllers/PayersController.php',

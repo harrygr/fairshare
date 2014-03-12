@@ -59,10 +59,9 @@ class Helper {
 * @return array An array of the transactions needed to clear each balance
 */
 public static function settleUp($totals) {
-	    //self::pr($totals);
+
 	$payments = array();
-	$amount = 0.11; $i = 1;
-	while ( $amount > 0.1 || $amount < -0.1 ){
+	do {
 		$min = 0;
 		$max = 0;
 		foreach ($totals as $id => $row){
@@ -84,32 +83,30 @@ public static function settleUp($totals) {
 				'amount'=> -$amount,
 				);
 
-			$totals[$max_id]['owes'] = $totals[$max_id]['owes'] + $amount;
-			$totals[$min_id]['owes'] = $totals[$min_id]['owes'] - $amount;
-			//	echo "<h2>$i</h2>";
-			//self::pr($totals);
+			$totals[$max_id]['owes'] += $amount;
+			$totals[$min_id]['owes'] -= $amount;
 		}
-		$i++;
-	}
-		//self::pr($payments);
+
+	} while ( $amount > 0.1 || $amount < -0.1 );
+
 	return $payments;
 }
 
-public static function deleteResource($url, $button_label='Delete',$form_parameters = array(),$button_options=array('class' => 'btn btn-link')){
+public static function deleteResource($route, $button_label='Delete',$form_parameters = array(),$button_options=array('class' => 'btn btn-link')){
 
-	$id = camel_case($url);
+	$id = camel_case(implode($route,"."));
 
 	if(empty($form_parameters)){
 		$form_parameters = array(
 			'method'=>'DELETE',
 			'class' =>'delete-form confirm-form',
-			'url'   => $url,
-			'id'	=> $id
+			'route'   => $route,
+			'id'	=> $id,
 			);
 	}else{
-		$form_parameters['url'] = $url;
+		$form_parameters['route'] = $route;
 		$form_parameters['method'] = 'DELETE';
-	};
+	}
 
 	return Form::open($form_parameters)
 	. '<button type="submit" class="' . $button_options['class'] . '">' . $button_label . '</button>'

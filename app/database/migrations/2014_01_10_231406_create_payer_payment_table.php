@@ -16,6 +16,8 @@ class CreatePayerPaymentTable extends Migration {
 			$table->increments('id');
 			$table->integer('payer_id');
 			$table->integer('payment_id');
+			$table->foreign('payer_id')->references('id')->on('payers')->onDelete('cascade');
+			$table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 			$table->decimal('amount', 10, 2);
 			$table->boolean('pays');
 			$table->timestamps();

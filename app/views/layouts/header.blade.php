@@ -15,6 +15,7 @@
 </head>
 <body>
 	<div id="wrap">
+	<header>
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -72,7 +73,7 @@
 			</div>
 		</div>
 	</nav> 
-
+</header>
 <div id="container" class="container">
 
 		{{-- Show the alerts --}}

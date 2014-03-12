@@ -4,11 +4,11 @@
 <div id="push"></div>
 </div>
 <!-- ./wrap -->
-<div id="footer">
+<footer id="footer">
 	<div class="container">
 		<p class="muted credit">Larpay project on {{ HTML::link('https://github.com/harrygr/larpay', 'Github') }}.</p>
 	</div>
-</div>
+</footer>
 {{ HTML::script('js/larpay.scripts.js'); }}
 </body>
 </html>

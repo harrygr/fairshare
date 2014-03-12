@@ -18,9 +18,10 @@ Route::get('/', array('as'=>'home', function()
 	return View::make('home');
 }));
 
-
+// Route model bindings: auto-passes the model to the route
 Route::model('payment', 'Payment');
 Route::model('payer', 'Payer');
+Route::model('page', 'Page');
 
 
 //User Routes
@@ -43,7 +44,7 @@ Route::group(array('before' => 'auth'), function(){
 
 
 	Route::get('payments/add', array('as' => 'payments.add', 'uses' => 'PaymentsController@add'));
-
+	Route::get('payments/reimburse', array('as' => 'payments.reimburse', 'uses' => 'PaymentsController@add_reimbursement'));
 	Route::get('payments/edit/{payment}', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
 
 

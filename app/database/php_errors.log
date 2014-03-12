@@ -1,0 +1,3 @@
+[10-Mar-2014 05:46:21] PHP Fatal error:  Class 'Seeder' not found in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/database/seeds/PayersTableSeeder.php on line 3
+[10-Mar-2014 05:46:21] PHP Stack trace:
+[10-Mar-2014 05:46:21] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/database/seeds/PayersTableSeeder.php:0

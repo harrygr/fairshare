@@ -38,10 +38,10 @@ Statement
                 <td>
                     <div class="action-cell">
                     {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="glyphicon glyphicon-pencil"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
-                    {{ Helper::deleteResource('payments/'.$payment['id'], '<i class="glyphicon glyphicon-remove"></i>') }}
+                    {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="glyphicon glyphicon-remove"></i>') }}
                     </div>
                 </td>
-				<td>{{ $payment['payment_date'] }}</td>
+				<td><time datetime="{{ $payment['payment_date'] }}">{{ $payment['payment_date'] }}</time></td>
 				<td>{{ $payment['company'] }}</td>
 				<td>{{ $payment['item'] }}</td>
 				<?php $shaded = true; ?>
