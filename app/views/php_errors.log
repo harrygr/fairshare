@@ -1,0 +1,12 @@
+[14-Mar-2014 06:02:28] PHP Notice:  Undefined variable: payer in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php on line 36
+[14-Mar-2014 06:02:28] PHP Stack trace:
+[14-Mar-2014 06:02:28] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php:0
+[14-Mar-2014 06:02:28] PHP Notice:  Trying to get property of non-object in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php on line 36
+[14-Mar-2014 06:02:28] PHP Stack trace:
+[14-Mar-2014 06:02:28] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php:0
+[14-Mar-2014 06:02:28] PHP Notice:  Undefined variable: payer in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php on line 37
+[14-Mar-2014 06:02:28] PHP Stack trace:
+[14-Mar-2014 06:02:28] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php:0
+[14-Mar-2014 06:02:28] PHP Notice:  Trying to get property of non-object in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php on line 37
+[14-Mar-2014 06:02:28] PHP Stack trace:
+[14-Mar-2014 06:02:28] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/views/components/payment-form.blade.php:0
