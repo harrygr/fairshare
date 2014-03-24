@@ -1,5 +1,11 @@
 	$(function(){
 		$('form.confirm-form').submit(function(){
-			return confirm('Are you sure?');
+			var currentForm = this;
+			event.preventDefault();
+			bootbox.confirm("Are you sure?", function(result){
+				if(result) {
+					currentForm.submit();
+				}
+			});
 		});
-	})
+	});

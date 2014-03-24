@@ -25,7 +25,7 @@ class MySqlGrammar extends Grammar {
 	 *
 	 * @var array
 	 */
-	protected $serials = array('bigInteger', 'integer');
+	protected $serials = array('bigInteger', 'integer', 'mediumInteger', 'smallInteger', 'tinyInteger');
 
 	/**
 	 * Compile the query to determine the list of tables.
@@ -274,6 +274,17 @@ class MySqlGrammar extends Grammar {
 		$from = $this->wrapTable($blueprint);
 
 		return "rename table {$from} to ".$this->wrapTable($command->to);
+	}
+
+	/**
+	 * Create the column definition for a char type.
+	 *
+	 * @param  \Illuminate\Support\Fluent  $column
+	 * @return string
+	 */
+	protected function typeChar(Fluent $column)
+	{
+		return "char({$column->length})";
 	}
 
 	/**

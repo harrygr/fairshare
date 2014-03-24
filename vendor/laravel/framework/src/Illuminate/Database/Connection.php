@@ -60,7 +60,7 @@ class Connection implements ConnectionInterface {
 	/**
 	 * The cache manager instance.
 	 *
-	 * @var \Illuminate\Cache\CacheManger
+	 * @var \Illuminate\Cache\CacheManager
 	 */
 	protected $cache;
 
@@ -649,6 +649,8 @@ class Connection implements ConnectionInterface {
 	 */
 	public function getReadPdo()
 	{
+		if ($this->transactions >= 1) return $this->getPdo();
+
 		return $this->readPdo ?: $this->pdo;
 	}
 
@@ -914,6 +916,16 @@ class Connection implements ConnectionInterface {
 	public function disableQueryLog()
 	{
 		$this->loggingQueries = false;
+	}
+
+	/**
+	 * Determine whether we're logging queries.
+	 *
+	 * @return bool
+	 */
+	public function logging()
+	{
+		return $this->loggingQueries;
 	}
 
 	/**

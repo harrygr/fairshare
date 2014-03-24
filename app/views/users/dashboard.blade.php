@@ -9,15 +9,27 @@ Dashboard
 
 <p>Account Email: {{ Auth::User()->email }}</p>
 
-<h3>Payers</h3>
-    @if ( count(Auth::User()->payer) > 0 )
-	<ul class="list-group">
-    @foreach(Auth::User()->payer as $payer)
-        <li class="list-group-item">{{ HTML::linkRoute('payers.edit', $payer->name, array($payer->id) ) }} <span class="badge">{{ $payer->email }}</span></li>
+<h2>Payer Summary</h2>
+@if ( count($totals) )
+<div class="row">
+
+    @foreach($totals as $summary)
+    <div class="col-md-4">
+        <div class="well">
+            <h3><i class="fa fa-user"></i> {{ $summary->name }} </h3>
+            <p><strong>Total Paid:</strong> {{ number_format($summary->total_paid,2) }}</p>
+            <p><strong>Fair Share:</strong> {{ number_format($summary->fair_share,2) }}</p>
+            <p><strong>Owes:</strong> <span class="{{ $summary->fair_share - $summary->total_paid > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($summary->fair_share - $summary->total_paid,2) }}</span></p>
+        </div>
+    </div>
     @endforeach
-    </ul>
-    @else
-   <p>No payers yet.</p>
-    @endif
-    <p>{{ HTML::linkRoute('payers.add', 'Add a Payer') }}</p>
+</div>
+@else
+<p>No payers yet.</p>
+@endif
+<p>{{ HTML::decode(HTML::linkRoute('payers.add', '<i class="fa fa-plus"></i> Add a Payer', null, array('class' => 'btn btn-success'))) }}</p>
+<div class="well">
+
+    @include('components.settle-up')
+</div>
 @stop

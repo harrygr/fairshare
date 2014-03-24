@@ -1,6 +1,12 @@
 <?php
 
-class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
+namespace PhpParser\Builder;
+
+use PhpParser;
+use PhpParser\Node\Name;
+use PhpParser\Node\Stmt;
+
+class Class_ extends PhpParser\BuilderAbstract
 {
     protected $name;
 
@@ -31,9 +37,9 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Extends a class.
      *
-     * @param PHPParser_Node_Name|string $class Name of class to extend
+     * @param Name|string $class Name of class to extend
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function extend($class) {
         $this->extends = $this->normalizeName($class);
@@ -44,10 +50,10 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Implements one or more interfaces.
      *
-     * @param PHPParser_Node_Name|string $interface Name of interface to implement
-     * @param PHPParser_Node_Name|string $...       More interfaces to implement
+     * @param Name|string $interface Name of interface to implement
+     * @param Name|string $...       More interfaces to implement
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function implement() {
         foreach (func_get_args() as $interface) {
@@ -60,10 +66,10 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Makes the class abstract.
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function makeAbstract() {
-        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT);
+        $this->setModifier(Stmt\Class_::MODIFIER_ABSTRACT);
 
         return $this;
     }
@@ -71,10 +77,10 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Makes the class final.
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function makeFinal() {
-        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_FINAL);
+        $this->setModifier(Stmt\Class_::MODIFIER_FINAL);
 
         return $this;
     }
@@ -82,9 +88,9 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Adds a statement.
      *
-     * @param PHPParser_Node_Stmt|PHPParser_Builder $stmt The statement to add
+     * @param Stmt|PhpParser\Builder $stmt The statement to add
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function addStmt($stmt) {
         $stmt = $this->normalizeNode($stmt);
@@ -98,7 +104,7 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
 
         $type = $stmt->getType();
         if (!isset($targets[$type])) {
-            throw new LogicException(sprintf('Unexpected node of type "%s"', $type));
+            throw new \LogicException(sprintf('Unexpected node of type "%s"', $type));
         }
 
         $targets[$type][] = $stmt;
@@ -111,7 +117,7 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
      *
      * @param array $stmts The statements to add
      *
-     * @return PHPParser_Builder_Class The builder instance (for fluid interface)
+     * @return self The builder instance (for fluid interface)
      */
     public function addStmts(array $stmts) {
         foreach ($stmts as $stmt) {
@@ -124,10 +130,10 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
     /**
      * Returns the built class node.
      *
-     * @return PHPParser_Node_Stmt_Class The built class node
+     * @return Stmt\Class_ The built class node
      */
     public function getNode() {
-        return new PHPParser_Node_Stmt_Class($this->name, array(
+        return new Stmt\Class_($this->name, array(
             'type' => $this->type,
             'extends' => $this->extends,
             'implements' => $this->implements,

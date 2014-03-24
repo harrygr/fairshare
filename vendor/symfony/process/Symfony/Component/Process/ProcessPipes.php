@@ -26,10 +26,13 @@ class ProcessPipes
     private $readBytes = array();
     /** @var Boolean */
     private $useFiles;
+    /** @var Boolean */
+    private $ttyMode;
 
-    public function __construct($useFiles = false)
+    public function __construct($useFiles, $ttyMode)
     {
         $this->useFiles = (Boolean) $useFiles;
+        $this->ttyMode = (Boolean) $ttyMode;
 
         // Fix for PHP bug #51800: reading from STDOUT pipe hangs forever on Windows if the output is too big.
         // Workaround for this problem is to use temporary files instead of pipes on Windows platform.
@@ -73,7 +76,7 @@ class ProcessPipes
     public function close()
     {
         $this->closeUnixPipes();
-        foreach ($this->fileHandles as $offset => $handle) {
+        foreach ($this->fileHandles as $handle) {
             fclose($handle);
         }
         $this->fileHandles = array();
@@ -105,6 +108,14 @@ class ProcessPipes
                 $this->fileHandles[Process::STDOUT],
                 // Use a file handle only for STDOUT. Using for both STDOUT and STDERR would trigger https://bugs.php.net/bug.php?id=65650
                 array('pipe', 'w'),
+            );
+        }
+
+        if ($this->ttyMode) {
+            return array(
+                array('file', '/dev/tty', 'r'),
+                array('file', '/dev/tty', 'w'),
+                array('file', '/dev/tty', 'w'),
             );
         }
 
@@ -207,6 +218,8 @@ class ProcessPipes
     /**
      * Reads data in file handles.
      *
+     * @param Boolean $close Whether to close file handles or not.
+     *
      * @return array An array of read data indexed by their fd.
      */
     private function readFileHandles($close = false)
@@ -242,6 +255,7 @@ class ProcessPipes
      * Reads data in file pipes streams.
      *
      * @param Boolean $blocking Whether to use blocking calls or not.
+     * @param Boolean $close    Whether to close file handles or not.
      *
      * @return array An array of read data indexed by their fd.
      */
@@ -275,9 +289,13 @@ class ProcessPipes
 
         foreach ($r as $pipe) {
             $type = array_search($pipe, $this->pipes);
-            $data = fread($pipe, 8192);
 
-            if (strlen($data) > 0) {
+            $data = '';
+            while ($dataread = fread($pipe, 8192)) {
+                $data .= $dataread;
+            }
+
+            if ($data) {
                 $read[$type] = $data;
             }
 

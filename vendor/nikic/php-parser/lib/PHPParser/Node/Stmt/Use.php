@@ -1,15 +1,19 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node\Stmt;
+
 /**
- * @property PHPParser_Node_Stmt_UseUse[] $uses Aliases
+ * @property UseUse[] $uses Aliases
  */
-class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt
+class Use_ extends Stmt
 {
     /**
      * Constructs an alias (use) list node.
      *
-     * @param PHPParser_Node_Stmt_UseUse[] $uses       Aliases
-     * @param array                        $attributes Additional attributes
+     * @param UseUse[] $uses       Aliases
+     * @param array    $attributes Additional attributes
      */
     public function __construct(array $uses, array $attributes = array()) {
         parent::__construct(

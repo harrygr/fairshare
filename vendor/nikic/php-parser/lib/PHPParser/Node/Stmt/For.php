@@ -1,12 +1,16 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+
 /**
- * @property PHPParser_Node_Expr[] $init  Init expressions
- * @property PHPParser_Node_Expr[] $cond  Loop conditions
- * @property PHPParser_Node_Expr[] $loop  Loop expressions
- * @property PHPParser_Node[]      $stmts Statements
+ * @property Node\Expr[] $init  Init expressions
+ * @property Node\Expr[] $cond  Loop conditions
+ * @property Node\Expr[] $loop  Loop expressions
+ * @property Node[]      $stmts Statements
  */
-class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt
+class For_ extends Node\Stmt
 {
     /**
      * Constructs a for loop node.
@@ -20,11 +24,11 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt
      */
     public function __construct(array $subNodes = array(), array $attributes = array()) {
         parent::__construct(
-            $subNodes + array(
-                'init'  => array(),
-                'cond'  => array(),
-                'loop'  => array(),
-                'stmts' => array(),
+            array(
+                'init'  => isset($subNodes['init']) ? $subNodes['init'] : array(),
+                'cond'  => isset($subNodes['cond']) ? $subNodes['cond'] : array(),
+                'loop'  => isset($subNodes['loop']) ? $subNodes['loop'] : array(),
+                'stmts' => isset($subNodes['stmts']) ? $subNodes['stmts'] : array(),
             ),
             $attributes
         );

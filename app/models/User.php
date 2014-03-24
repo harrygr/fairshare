@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Zizaco\Confide\ConfideUser;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends ConfideUser {
 
 	/**
 	 * The database table used by the model.
@@ -12,12 +11,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
+	// public static $rules = array(
+ //   'username'=>'unique:required|alpha|min:2',
+ //   'email'=>'required|email|unique:users',
+ //   'password'=>'required|alpha_num|between:6,50|confirmed',
+ //   'password_confirmation'=>'required|alpha_num|between:6,50'
+ //   );
 	public static $rules = array(
-   'username'=>'required|alpha|min:2',
-   'email'=>'required|email|unique:users',
-   'password'=>'required|alpha_num|between:6,12|confirmed',
-   'password_confirmation'=>'required|alpha_num|between:6,12'
-   );
+		'username' => 'unique:users,username',
+		'email'    => 'required|email',
+		'password' => 'required|between:4,60|confirmed',
+		);
 
 	/**
 	 * The attributes excluded from the model's JSON form.

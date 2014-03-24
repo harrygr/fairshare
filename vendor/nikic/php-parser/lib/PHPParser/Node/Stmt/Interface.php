@@ -1,11 +1,16 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+use PhpParser\Error;
+
 /**
  * @property string                $name    Name
- * @property PHPParser_Node_Name[] $extends Extended interfaces
- * @property PHPParser_Node[]      $stmts   Statements
+ * @property Node\Name[] $extends Extended interfaces
+ * @property Node[]      $stmts   Statements
  */
-class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt
+class Interface_ extends Node\Stmt
 {
     protected static $specialNames = array(
         'self'   => true,
@@ -24,21 +29,21 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt
      */
     public function __construct($name, array $subNodes = array(), array $attributes = array()) {
         parent::__construct(
-            $subNodes + array(
-                'extends' => array(),
-                'stmts'   => array(),
+            array(
+                'name'    => $name,
+                'extends' => isset($subNodes['extends']) ? $subNodes['extends'] : array(),
+                'stmts'   => isset($subNodes['stmts'])   ? $subNodes['stmts']   : array(),
             ),
             $attributes
         );
-        $this->name = $name;
 
         if (isset(self::$specialNames[(string) $this->name])) {
-            throw new PHPParser_Error(sprintf('Cannot use "%s" as interface name as it is reserved', $this->name));
+            throw new Error(sprintf('Cannot use \'%s\' as class name as it is reserved', $this->name));
         }
 
         foreach ($this->extends as $interface) {
             if (isset(self::$specialNames[(string) $interface])) {
-                throw new PHPParser_Error(sprintf('Cannot use "%s" as interface name as it is reserved', $interface));
+                throw new Error(sprintf('Cannot use \'%s\' as interface name as it is reserved', $interface));
             }
         }
     }

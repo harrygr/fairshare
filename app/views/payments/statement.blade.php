@@ -13,8 +13,8 @@ Statement
     	<thead>
     		<tr>
     			<th colspan='4'></th>
-    			@foreach ($payers as $payer)
-				<th colspan='3' id="payer-{{ $payer->id }}">{{ $payer->name }}</th>
+    			@foreach ($payers as $payer_id => $payer)
+				<th colspan='3' id="payer-{{ $payer_id }}">{{ $payer }}</th>
     			@endforeach
     		</tr>
     		<tr>
@@ -37,19 +37,19 @@ Statement
 			<tr>
                 <td>
                     <div class="action-cell">
-                    {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="glyphicon glyphicon-pencil"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
-                    {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="glyphicon glyphicon-remove"></i>') }}
+                    {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="fa fa-edit"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
+                    {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="fa fa-trash-o"></i>') }}
                     </div>
                 </td>
 				<td><time datetime="{{ $payment['payment_date'] }}">{{ $payment['payment_date'] }}</time></td>
 				<td>{{ $payment['company'] }}</td>
 				<td>{{ $payment['item'] }}</td>
 				<?php $shaded = true; ?>
-				@foreach ($payers as $payer)
-					@if ( isset($payment['payers'][$payer->id]) )
-					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['amount'], 2) }}</td>
-					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['fair_share'], 2) }}</td>
-					<td class="{{ $shaded ? 'active' : '' }} {{ $payment['payers'][$payer->id]['pivot']['owes'] > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($payment['payers'][$payer->id]['pivot']['owes'], 2) }}</td>
+				@foreach ($payers as $payer_id => $payer)
+					@if ( isset($payment['payers'][$payer_id]) )
+					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer_id]['pivot']['amount'], 2) }}</td>
+					<td class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment['payers'][$payer_id]['pivot']['fair_share'], 2) }}</td>
+					<td class="{{ $shaded ? 'active' : '' }} {{ $payment['payers'][$payer_id]['pivot']['owes'] > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($payment['payers'][$payer_id]['pivot']['owes'], 2) }}</td>
 					@else
 					<td class="{{ $shaded ? 'active' : '' }}">0.00</td>
 					<td class="{{ $shaded ? 'active' : '' }}">0.00</td>
@@ -65,11 +65,12 @@ Statement
     		<tr>
     			<th colspan="4" >Totals</th>
     			<?php $shaded = true; ?>
-    			@foreach ($payers as $payer)
-					@if ( isset($payment_totals[$payer->id]) )
-					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment_totals[$payer->id]['amount'], 2) }}</th>
-					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($payment_totals[$payer->id]['fair_share'], 2) }}</th>
-					<th class="{{ $shaded ? 'active' : '' }} {{ $payment_totals[$payer->id]['owes'] > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($payment_totals[$payer->id]['owes'], 2) }}</th>
+    			@foreach ($payers as $payer_id => $payer)
+					@if ( isset($totals[$payer_id]) )
+					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($totals[$payer_id]->total_paid, 2) }}</th>
+					<th class="{{ $shaded ? 'active' : '' }}">{{ number_format($totals[$payer_id]->fair_share, 2) }}</th>
+                    <?php $owes = $totals[$payer_id]->fair_share - $totals[$payer_id]->total_paid; ?>
+					<th class="{{ $shaded ? 'active' : '' }} {{ $owes > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($owes, 2) }}</th>
 					@else
 					<th>0.00</th>
 					<th>0.00</th>
@@ -79,24 +80,14 @@ Statement
 				@endforeach
     		</tr>
     	</tfoot>
-
     </table>
 </div>
     @else
     <p>No payers yet. {{ HTML::linkRoute('payers.add', 'Add a Payer') }}</p>
     @endif
+
+    <div class="well">
+    @include('components.settle-up')
+    </div>
 @stop
 
-@section('sidebar')
-    
-    <h2>Settle Up</h2>
-    @if ( $settles && count($payers) )
-        <ul>
-        @foreach ($settles as $s)
-        <li>{{ $payers[$s['from']]->name }} pays {{ $payers[$s['to']]->name }} {{ number_format($s['amount'], 2) }}</li>
-        @endforeach
-        </ul>
-    @else
-    <p>All square!</p>
-    @endif
-@stop

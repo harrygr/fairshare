@@ -1,12 +1,12 @@
 @include('layouts.header')
 
 		<section class="row">
-			<div class="col-md-9">
+			<div class="col-md-12">
 				@yield('content')
 			</div>
-			<aside class="col-md-3">
+<!-- 		<aside class="col-md-3">
 				@yield('sidebar')
-			</aside>
+			</aside> -->
 		</section>
 
 @include('layouts.footer')	

@@ -1,17 +1,21 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+
 /**
- * @property string           $name  Name
- * @property PHPParser_Node[] $stmts Statements
+ * @property string $name  Name
+ * @property Node[] $stmts Statements
  */
-class PHPParser_Node_Stmt_Trait extends PHPParser_Node_Stmt
+class Trait_ extends Node\Stmt
 {
     /**
      * Constructs a trait node.
      *
-     * @param string           $name       Name
-     * @param PHPParser_Node[] $stmts      Statements
-     * @param array            $attributes Additional attributes
+     * @param string $name       Name
+     * @param Node[] $stmts      Statements
+     * @param array  $attributes Additional attributes
      */
     public function __construct($name, array $stmts = array(), array $attributes = array()) {
         parent::__construct(

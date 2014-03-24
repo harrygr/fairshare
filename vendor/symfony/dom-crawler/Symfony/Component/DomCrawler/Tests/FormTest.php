@@ -224,6 +224,11 @@ class FormTest extends \PHPUnit_Framework_TestCase
                  array('foobar' => array('InputFormField', 'foobar')),
             ),
             array(
+                'turns an image input into x and y fields',
+                '<input type="image" name="bar" />',
+                array('bar.x' => array('InputFormField', '0'), 'bar.y' => array('InputFormField', '0')),
+            ),
+            array(
                 'returns textareas',
                 '<textarea name="foo">foo</textarea>
                  <input type="submit" />',
@@ -599,7 +604,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $form = $this->createForm('<form method="post"><input type="text" name="bar" value="bar" /><input type="submit" /></form>');
 
-        $this->assertEquals('Symfony\\Component\\DomCrawler\\Field\\InputFormField', get_class($form->get('bar')), '->get() returns the field object associated with the given name');
+        $this->assertInstanceOf('Symfony\\Component\\DomCrawler\\Field\\InputFormField', $form->get('bar'), '->get() returns the field object associated with the given name');
 
         try {
             $form->get('foo');
@@ -614,8 +619,8 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $form = $this->createForm('<form method="post"><input type="text" name="bar" value="bar" /><input type="submit" /></form>');
 
         $fields = $form->all();
-        $this->assertEquals(1, count($fields), '->all() return an array of form field objects');
-        $this->assertEquals('Symfony\\Component\\DomCrawler\\Field\\InputFormField', get_class($fields['bar']), '->all() return an array of form field objects');
+        $this->assertCount(1, $fields, '->all() return an array of form field objects');
+        $this->assertInstanceOf('Symfony\\Component\\DomCrawler\\Field\\InputFormField', $fields['bar'], '->all() return an array of form field objects');
     }
 
     public function testSubmitWithoutAFormButton()

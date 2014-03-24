@@ -94,6 +94,16 @@ abstract class Relation {
 	abstract public function getResults();
 
 	/**
+	 * Get the relationship for eager loading.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Collection
+	 */
+	public function getEager()
+	{
+		return $this->get();
+	}
+
+	/**
 	 * Touch all of the related models for the relationship.
 	 *
 	 * @return void
@@ -130,9 +140,10 @@ abstract class Relation {
 	 * Add the constraints for a relationship count query.
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @param  \Illuminate\Database\Eloquent\Builder  $parent
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function getRelationCountQuery(Builder $query)
+	public function getRelationCountQuery(Builder $query, Builder $parent)
 	{
 		$query->select(new Expression('count(*)'));
 

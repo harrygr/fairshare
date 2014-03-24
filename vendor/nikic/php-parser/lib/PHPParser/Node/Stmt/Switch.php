@@ -1,19 +1,23 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+
 /**
- * @property PHPParser_Node_Expr        $cond  Condition
- * @property PHPParser_Node_Stmt_Case[] $cases Case list
+ * @property Node\Expr $cond  Condition
+ * @property Case_[]   $cases Case list
  */
-class PHPParser_Node_Stmt_Switch extends PHPParser_Node_Stmt
+class Switch_ extends Node\Stmt
 {
     /**
      * Constructs a case node.
      *
-     * @param PHPParser_Node_Expr        $cond       Condition
-     * @param PHPParser_Node_Stmt_Case[] $cases      Case list
-     * @param array                      $attributes Additional attributes
+     * @param Node\Expr $cond       Condition
+     * @param Case_[]   $cases      Case list
+     * @param array     $attributes Additional attributes
      */
-    public function __construct(PHPParser_Node_Expr $cond, array $cases, array $attributes = array()) {
+    public function __construct(Node\Expr $cond, array $cases, array $attributes = array()) {
         parent::__construct(
             array(
                 'cond'  => $cond,

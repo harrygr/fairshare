@@ -7,7 +7,7 @@
  *
  * Encode and decode X.509 certificates.
  *
- * The extensions are from {@link http://tools.ietf.org/html/rfc5280 RFC5280} and 
+ * The extensions are from {@link http://tools.ietf.org/html/rfc5280 RFC5280} and
  * {@link http://web.archive.org/web/19961027104704/http://www3.netscape.com/eng/security/cert-exts.html Netscape Certificate Extensions}.
  *
  * Note that loading an X.509 certificate and resaving it may invalidate the signature.  The reason being that the signature is based on a
@@ -22,10 +22,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -125,7 +125,6 @@ define('FILE_X509_ATTR_REPLACE', -3); // Clear first, then add a value.
  *
  * @package File_X509
  * @author  Jim Wigginton <terrafrost@php.net>
- * @version 0.3.1
  * @access  public
  */
 class File_X509
@@ -248,7 +247,7 @@ class File_X509
      * The signature subject
      *
      * There's no guarantee File_X509 is going to reencode an X.509 cert in the same way it was originally
-     * encoded so we take save the portion of the original cert that the signature would have made for. 
+     * encoded so we take save the portion of the original cert that the signature would have made for.
      *
      * @var String
      * @access private
@@ -2531,7 +2530,7 @@ class File_X509
                 return strtolower(bin2hex(pack('N', $hash)));
         }
 
-        // Defaut is to return a string.
+        // Default is to return a string.
         $start = true;
         $output = '';
         $asn1 = new File_ASN1();

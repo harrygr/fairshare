@@ -9,7 +9,7 @@ Add Payment
    <div class="col-md-6">
       <h2 class="form-signup-heading">Add a Reimbursement</h2>
       @if (count($payers))
-      {{ Form::open( array('route'=>'payments.store', 'class'=>'form-horizontal')) }}
+      {{ Form::open( array('route'=>'payments.storeReimbursement', 'class'=>'form-horizontal')) }}
 
       @include('components.reimbursement-form')
       <div class="form-group">

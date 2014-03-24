@@ -1,30 +1,35 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+
 /**
- * @property PHPParser_Node_Expr           $cond    Condition expression
- * @property PHPParser_Node[]              $stmts   Statements
- * @property PHPParser_Node_Stmt_ElseIf[]  $elseifs Elseif clauses
- * @property null|PHPParser_Node_Stmt_Else $else    Else clause
+ * @property Node\Expr            $cond    Condition expression
+ * @property Node[]               $stmts   Statements
+ * @property Node\Stmt\ElseIf_[]  $elseifs Elseif clauses
+ * @property null|Node\Stmt\Else_ $else    Else clause
  */
-class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt
+class If_ extends Node\Stmt
 {
 
     /**
      * Constructs an if node.
      *
-     * @param PHPParser_Node_Expr $cond       Condition
-     * @param array               $subNodes   Array of the following optional subnodes:
-     *                                        'stmts'   => array(): Statements
-     *                                        'elseifs' => array(): Elseif clauses
-     *                                        'else'    => null   : Else clause
-     * @param array               $attributes Additional attributes
+     * @param Node\Expr $cond       Condition
+     * @param array     $subNodes   Array of the following optional subnodes:
+     *                              'stmts'   => array(): Statements
+     *                              'elseifs' => array(): Elseif clauses
+     *                              'else'    => null   : Else clause
+     * @param array     $attributes Additional attributes
      */
-    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), array $attributes = array()) {
+    public function __construct(Node\Expr $cond, array $subNodes = array(), array $attributes = array()) {
         parent::__construct(
-            $subNodes + array(
-                'stmts'   => array(),
-                'elseifs' => array(),
-                'else'    => null,
+            array(
+                'cond'    => $cond,
+                'stmts'   => isset($subNodes['stmts'])   ? $subNodes['stmts']   : array(),
+                'elseifs' => isset($subNodes['elseifs']) ? $subNodes['elseifs'] : array(),
+                'else'    => isset($subNodes['else'])    ? $subNodes['else']    : null,
             ),
             $attributes
         );

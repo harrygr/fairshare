@@ -18,20 +18,12 @@ class Helper {
 			$pmt_sum = 0; $pyrs_sum = 0;
 			foreach ($payment['payers'] as $payer){
 				$pmt_sum += $payer['pivot']['amount'];
-				$pyrs_sum += $payer['pivot']['pays'];
-				if (!isset($payer_totals[$payer['pivot']['payer_id']])) {
-					$payer_totals[$payer['pivot']['payer_id']] = array(
-						'amount'	=> 0, 
-						'fair_share'=> 0, 
-						'owes'		=> 0
-						);
-				}
+				$pyrs_sum += $payer['pivot']['pays'];	
 			}
+
 			$fair_share = $pyrs_sum > 0 ? $pmt_sum / $pyrs_sum : 0;
 			$payments[$pmt_id]['total'] = $pmt_sum;
 			$payments[$pmt_id]['fair_share'] = $fair_share;
-
-
 
 			foreach ($payment['payers'] as $pyr_id => $payer){
 				$pyr_fs = $fair_share * $payer['pivot']['pays'];
@@ -39,16 +31,11 @@ class Helper {
 				$payments[$pmt_id]['payers'][$pyr_id]['pivot']['owes'] = $pyr_fs - $payer['pivot']['amount'];
 				$payer_id = $payer['pivot']['payer_id'];
 				$payments[$pmt_id]['payers_tmp'][$payer_id] = $payments[$pmt_id]['payers'][$pyr_id];
-
-				//add the totals to the total array
-				$payer_totals[$payer_id]['amount'] += $payer['pivot']['amount'];
-				$payer_totals[$payer_id]['fair_share'] += $pyr_fs;
-				$payer_totals[$payer_id]['owes'] += $payments[$pmt_id]['payers'][$pyr_id]['pivot']['owes'];
 			}
 			$payments[$pmt_id]['payers'] = $payments[$pmt_id]['payers_tmp'];
 			unset($payments[$pmt_id]['payers_tmp']);
 		}
-		return array('payments' => $payments, 'totals'=>$payer_totals);
+		return $payments;
 	}
 
 /**
@@ -59,18 +46,19 @@ class Helper {
 * @return array An array of the transactions needed to clear each balance
 */
 public static function settleUp($totals) {
-
+	
 	$payments = array();
 	do {
 		$min = 0;
 		$max = 0;
 		foreach ($totals as $id => $row){
-			if ($row['owes'] < $min) {
-				$min = $row['owes'];
+			if (!isset($totals[$id]->owes))	$totals[$id]->owes = $row->fair_share - $row->total_paid;
+			if ($totals[$id]->owes < $min) {
+				$min = $totals[$id]->owes;
 				$min_id = $id;
 			}
-			if ($row['owes'] > $max) {
-				$max = $row['owes'];
+			if ($totals[$id]->owes > $max) {
+				$max = $totals[$id]->owes;
 				$max_id = $id;
 			}
 		}
@@ -83,12 +71,11 @@ public static function settleUp($totals) {
 				'amount'=> -$amount,
 				);
 
-			$totals[$max_id]['owes'] += $amount;
-			$totals[$min_id]['owes'] -= $amount;
+			$totals[$max_id]->owes += $amount;
+			$totals[$min_id]->owes -= $amount;
 		}
 
 	} while ( $amount > 0.1 || $amount < -0.1 );
-
 	return $payments;
 }
 

@@ -1,17 +1,21 @@
 <?php
 
+namespace PhpParser\Node\Stmt;
+
+use PhpParser\Node;
+
 /**
- * @property null|PHPParser_Node_Expr $num Number of loops to continue
+ * @property null|Node\Expr $num Number of loops to continue
  */
-class PHPParser_Node_Stmt_Continue extends PHPParser_Node_Stmt
+class Continue_ extends Node\Stmt
 {
     /**
      * Constructs a continue node.
      *
-     * @param null|PHPParser_Node_Expr $num        Number of loops to continue
-     * @param array                    $attributes Additional attributes
+     * @param null|Node\Expr $num        Number of loops to continue
+     * @param array          $attributes Additional attributes
      */
-    public function __construct(PHPParser_Node_Expr $num = null, array $attributes = array()) {
+    public function __construct(Node\Expr $num = null, array $attributes = array()) {
         parent::__construct(
             array(
                 'num' => $num,

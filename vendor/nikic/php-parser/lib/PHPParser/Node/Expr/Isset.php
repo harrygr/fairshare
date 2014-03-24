@@ -1,15 +1,19 @@
 <?php
 
+namespace PhpParser\Node\Expr;
+
+use PhpParser\Node\Expr;
+
 /**
- * @property PHPParser_Node_Expr[] $vars Variables
+ * @property Expr[] $vars Variables
  */
-class PHPParser_Node_Expr_Isset extends PHPParser_Node_Expr
+class Isset_ extends Expr
 {
     /**
      * Constructs an array node.
      *
-     * @param PHPParser_Node_Expr[] $vars       Variables
-     * @param array                 $attributes Additional attributes
+     * @param Expr[] $vars       Variables
+     * @param array  $attributes Additional attributes
      */
     public function __construct(array $vars, array $attributes = array()) {
         parent::__construct(

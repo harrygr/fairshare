@@ -4,8 +4,11 @@ body {
 .action-cell *{
     display:inline-block;
     float:left;
-    max-width:50%;
+
 }
 .action-cell .btn{
     padding:2px;
+}
+header .fa{
+	opacity:0.65;
 }

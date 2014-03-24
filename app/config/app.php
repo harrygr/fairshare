@@ -106,6 +106,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+		'Zizaco\Confide\ConfideServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Profiler\ProfilerServiceProvider',
 
@@ -175,6 +176,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Profiler' 		  => 'Profiler\Facades\Profiler',
+		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 
 	),
 

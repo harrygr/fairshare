@@ -34,8 +34,8 @@ class Builder {
 	 * @var array
 	 */
 	protected $passthru = array(
-		'toSql', 'lists', 'insert', 'insertGetId', 'pluck',
-		'count', 'min', 'max', 'avg', 'sum', 'exists',
+		'toSql', 'lists', 'insert', 'insertGetId', 'pluck', 'count',
+		'min', 'max', 'avg', 'sum', 'exists', 'getBindings',
 	);
 
 	/**
@@ -95,7 +95,7 @@ class Builder {
 	{
 		if ( ! is_null($model = $this->find($id, $columns))) return $model;
 
-		throw new ModelNotFoundException;
+		throw with(new ModelNotFoundException)->setModel(get_class($this->model));
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Builder {
 	{
 		if ( ! is_null($model = $this->first($columns))) return $model;
 
-		throw new ModelNotFoundException;
+		throw with(new ModelNotFoundException)->setModel(get_class($this->model));
 	}
 
 	/**
@@ -427,7 +427,7 @@ class Builder {
 	 */
 	protected function isSoftDeleteConstraint(array $where, $column)
 	{
-		return $where['column'] == $column && $where['type'] == 'Null';
+		return $where['type'] == 'Null' && $where['column'] == $column;
 	}
 
 	/**
@@ -506,7 +506,7 @@ class Builder {
 		// Once we have the results, we just match those back up to their parent models
 		// using the relationship instance. Then we just return the finished arrays
 		// of models which have been eagerly hydrated and are readied for return.
-		$results = $relation->get();
+		$results = $relation->getEager();
 
 		return $relation->match($models, $results, $name);
 	}
@@ -581,6 +581,46 @@ class Builder {
 	}
 
 	/**
+	 * Add a basic where clause to the query.
+	 *
+	 * @param  string  $column
+	 * @param  string  $operator
+	 * @param  mixed   $value
+	 * @param  string  $boolean
+	 * @return \Illuminate\Database\Eloquent\Builder|static
+	 */
+	public function where($column, $operator = null, $value = null, $boolean = 'and')
+	{
+		if ($column instanceof Closure)
+		{
+			$query = $this->model->newQuery(false);
+
+			call_user_func($column, $query);
+
+			$this->query->addNestedWhereQuery($query->getQuery(), $boolean);
+		}
+		else
+		{
+			call_user_func_array(array($this->query, 'where'), func_get_args());
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Add an "or where" clause to the query.
+	 *
+	 * @param  string  $column
+	 * @param  string  $operator
+	 * @param  mixed   $value
+	 * @return \Illuminate\Database\Eloquent\Builder|static
+	 */
+	public function orWhere($column, $operator = null, $value = null)
+	{
+		return $this->where($column, $operator, $value, 'or');
+	}
+
+	/**
 	 * Add a relationship count condition to the query.
 	 *
 	 * @param  string  $relation
@@ -594,7 +634,7 @@ class Builder {
 	{
 		$relation = $this->getHasRelationQuery($relation);
 
-		$query = $relation->getRelationCountQuery($relation->getRelated()->newQuery());
+		$query = $relation->getRelationCountQuery($relation->getRelated()->newQuery(), $this);
 
 		if ($callback) call_user_func($callback, $query);
 
