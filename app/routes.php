@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -18,22 +16,12 @@ Route::get('/', array('as'=>'home', function()
 	return View::make('home');
 }));
 
-// Route model bindings: auto-passes the model to the route
+// Route model bindings: auto-passes the model to the controller
 Route::model('payment', 'Payment');
 Route::model('payer', 'Payer');
 Route::model('page', 'Page');
 
-
-//User Routes
-// Route::get('/register', array('as' => 'users.showRegister', 'uses' => 'UsersController@showRegister'));
-// Route::get('/login', array('as' => 'users.showLogin', 'uses' => 'UsersController@showLogin'));
-// Route::get('/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
-// Route::post('/login', array('as' => 'users.doLogin', 'uses' => 'UsersController@doLogin'));
-
-// Route::group(array('before' => 'csrf'), function(){
-// 	Route::post('/register', array('as' => 'users.doRegister', 'uses' => 'UsersController@doRegister'));
-// });
-
+//Must be logged in to go to these routes
 Route::group(array('before' => 'auth'), function(){
 	Route::get('/dashboard', array('as' => 'users.dashboard', 'uses' => 'UserController@dashboard'));
 	Route::get('/users', array('uses' => 'UsersController@index'));
@@ -42,17 +30,13 @@ Route::group(array('before' => 'auth'), function(){
 	Route::get('payers/edit/{payer}', array('as' => 'payers.edit', 'uses' => 'PayersController@edit'));
 	Route::get('payers/', array('as' => 'payers.index', 'uses' => 'PayersController@index'));
 
-
 	Route::get('payments/add', array('as' => 'payments.add', 'uses' => 'PaymentsController@add'));
 	Route::get('payments/reimburse', array('as' => 'payments.reimburse', 'uses' => 'PaymentsController@addReimbursement'));
 	Route::get('payments/edit/{payment}', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
-
-
 	Route::get('statement', array('as' => 'payments.statement', 'uses' => 'PaymentsController@statement'));
-
-
 });
 
+// must be logged in and check for XSS attacks
 Route::group(array('before' => array('auth', 'csrf')), function(){
 	Route::post('payments/store', array('as' => 'payments.store', 'uses' => 'PaymentsController@store'));
 	Route::post('payments/storeReimbursement', array('as' => 'payments.storeReimbursement', 'uses' => 'PaymentsController@storeReimbursement'));
@@ -64,42 +48,13 @@ Route::group(array('before' => array('auth', 'csrf')), function(){
 });
 
 // Confide routes
-Route::get( 'register',                 array(
-	'as' => 'users.create', 
-	'uses' => 'UserController@create'));
-
-Route::post('user/store',                        array(
-	'as' => 'users.store', 
-	'uses' => 'UserController@store'));
-
-Route::get( 'login',                  array(
-	'as' => 'users.login', 
-	'uses' => 'UserController@login'));
-
-Route::post('login',                  array(
-	'as' => 'users.do_login', 
-	'uses' => 'UserController@do_login'));
-
-Route::get( 'user/confirm/{code}',         array(
-	'as' => 'users.confirm', 
-	'uses' => 'UserController@confirm'));
-
-Route::get( 'user/forgot_password',        array(
-	'as' => 'users.forgot_password', 
-	'uses' => 'UserController@forgot_password'));
-
-Route::post('user/forgot_password',        array(
-	'as' => 'users.do_forgot_password', 
-	'uses' => 'UserController@do_forgot_password'));
-
-Route::get( 'user/reset_password/{token}', array(
-	'as' => 'users.reset_password', 
-	'uses' => 'UserController@reset_password'));
-
-Route::post('user/reset_password',         array(
-	'as' => 'users.do_reset_password', 
-	'uses' => 'UserController@do_reset_password'));
-
-Route::get( 'user/logout',                 array(
-	'as' => 'users.logout', 
-	'uses' => 'UserController@logout'));
+Route::get( 'register', array( 'as' => 'users.create', 	'uses' => 'UserController@create'));
+Route::post('user/store', array( 'as' => 'users.store', 	'uses' => 'UserController@store'));
+Route::get( 'login', array( 'as' => 'users.login', 	'uses' => 'UserController@login'));
+Route::post('login', array( 'as' => 'users.do_login', 	'uses' => 'UserController@do_login'));
+Route::get( 'user/confirm/{code}', array( 'as' => 'users.confirm', 	'uses' => 'UserController@confirm'));
+Route::get( 'user/forgot_password', array( 'as' => 'users.forgot_password', 	'uses' => 'UserController@forgot_password'));
+Route::post('user/forgot_password', array( 'as' => 'users.do_forgot_password', 	'uses' => 'UserController@do_forgot_password'));
+Route::get( 'user/reset_password/{token}', array( 'as' => 'users.reset_password', 	'uses' => 'UserController@reset_password'));
+Route::post('user/reset_password', array( 'as' => 'users.do_reset_password', 	'uses' => 'UserController@do_reset_password'));
+Route::get( 'user/logout', array( 'as' => 'users.logout', 	'uses' => 'UserController@logout'));

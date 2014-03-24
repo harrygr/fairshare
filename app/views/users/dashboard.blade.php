@@ -25,7 +25,7 @@ Dashboard
     @endforeach
 </div>
 @else
-<p>No payers yet.</p>
+<p>Nothing to see here yet</p>
 @endif
 <p>{{ HTML::decode(HTML::linkRoute('payers.add', '<i class="fa fa-plus"></i> Add a Payer', null, array('class' => 'btn btn-success'))) }}</p>
 <div class="well">

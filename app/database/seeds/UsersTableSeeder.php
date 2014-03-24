@@ -5,7 +5,7 @@ class UsersTableSeeder extends Seeder {
 	public function run()
 	{
 		// Uncomment the below to wipe the table clean before populating
-		 DB::table('users')->truncate();
+		DB::table('users')->truncate();
 
 		$now = date('Y-m-d H:i:s');
 
@@ -14,7 +14,8 @@ class UsersTableSeeder extends Seeder {
 			 'username'=>'example',
 			 'email' => 'lary@marpay.com',
 			 'password' => Hash::make('example'),
-			 //'role'     => 'user',
+			 'confirmation_code' => md5( uniqid(mt_rand(), true) ),
+			 'confirmed' => true,
 			 'created_at' => $now,
 			 'updated_at' => $now,
 			 ),
@@ -22,7 +23,8 @@ class UsersTableSeeder extends Seeder {
 			 'username'=>'example2',
 			 'email' => 'lary@marpayly.com',
 			 'password' => Hash::make('example2'),
-			 //'role'     => 'admin', //make this user an admin
+			 'confirmation_code' => md5( uniqid(mt_rand(), true) ),
+			 'confirmed' => true,
 			 'created_at' => $now,
 			 'updated_at' => $now,
 			 )

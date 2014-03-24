@@ -176,7 +176,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Profiler' 		  => 'Profiler\Facades\Profiler',
-		'Confide'    => 'Zizaco\Confide\ConfideFacade',
+		'Confide'         => 'Zizaco\Confide\ConfideFacade',
 
 	),
 

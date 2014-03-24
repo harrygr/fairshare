@@ -10,34 +10,7 @@ class Helper {
 		echo '</pre>';
 	}
 
-	public static function process_payment($payments){
-
-		foreach ($payments as $pmt_id => $payment){
-
-			//get the total for the payment
-			$pmt_sum = 0; $pyrs_sum = 0;
-			foreach ($payment['payers'] as $payer){
-				$pmt_sum += $payer['pivot']['amount'];
-				$pyrs_sum += $payer['pivot']['pays'];	
-			}
-
-			$fair_share = $pyrs_sum > 0 ? $pmt_sum / $pyrs_sum : 0;
-			$payments[$pmt_id]['total'] = $pmt_sum;
-			$payments[$pmt_id]['fair_share'] = $fair_share;
-
-			foreach ($payment['payers'] as $pyr_id => $payer){
-				$pyr_fs = $fair_share * $payer['pivot']['pays'];
-				$payments[$pmt_id]['payers'][$pyr_id]['pivot']['fair_share'] = $pyr_fs;
-				$payments[$pmt_id]['payers'][$pyr_id]['pivot']['owes'] = $pyr_fs - $payer['pivot']['amount'];
-				$payer_id = $payer['pivot']['payer_id'];
-				$payments[$pmt_id]['payers_tmp'][$payer_id] = $payments[$pmt_id]['payers'][$pyr_id];
-			}
-			$payments[$pmt_id]['payers'] = $payments[$pmt_id]['payers_tmp'];
-			unset($payments[$pmt_id]['payers_tmp']);
-		}
-		return $payments;
-	}
-
+	
 /**
 * Calculate the best way for a group of people to pay each other back
 *

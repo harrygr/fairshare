@@ -241,42 +241,42 @@ class PaymentsController extends BaseController {
 
 	public function statement(){
 
+        //Get all the payments for the logged in user
 		$payments = Payment::whereHas('payers', function($q){
 			$q->where('user_id', '=', Auth::user()->id); 
 		},'>=', DB::raw('1'))->get();
-
 		
-		//lazy eager load the pivot data
+		//lazy eager load the pivot data, which contains payer info for each payment
 		$payments = $payments->load(array(
 			'payers' => function($q){
 				$q->where('user_id', '=', Auth::user()->id);
-			}))
-		->toArray();
-
+			}))->toArray();
 
 		$totals = array();
 		$settles = array();
-
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
 
 		if ( $payments ) {
-			$payments = Helper::process_payment($payments);
+			$payments = Payment::process_payment($payments);
 
 			$totals = Payment::payer_summary(Auth::user()->id);
 			$settles = Helper::settleUp($totals);
 		} else {
 			$payments = array();
-			Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
-			Session::flash('alert-class', 'alert-warning');
+			//Display a message if there are no payers or payments. Payers need to be added first so we'll show that before.
+			if ( !$payers ){
+			    Session::flash('message', 'There are no payers. ' . HTML::linkRoute('payers.add', 'Add one') );
+			} else {
+			    Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
+			}
+			Session::flash('alert-class', 'alert-info');
 		}
-
 
 		return View::make('payments.statement')
 		->with(compact('payments'))
 		->with(compact('totals'))
 		->with(compact('payers'))
 		->with(compact('settles'));
-
 	}
 
 }

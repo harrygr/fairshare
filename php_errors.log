@@ -1,0 +1,99 @@
+[24-Mar-2014 10:13:32] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:13:32] PHP Stack trace:
+[24-Mar-2014 10:13:32] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:13:33] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:13:33] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:13:33] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:13:33] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:13:33] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:13:33] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:13:33] PHP Stack trace:
+[24-Mar-2014 10:13:33] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:13:33] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:13:33] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:13:33] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:13:33] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:13:33] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:17:37] PHP Fatal error:  Class 'Route' not found in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/routes.php on line 14
+[24-Mar-2014 10:17:37] PHP Stack trace:
+[24-Mar-2014 10:17:37] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/app/routes.php:0
+[24-Mar-2014 10:17:51] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:17:51] PHP Stack trace:
+[24-Mar-2014 10:17:51] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:17:51] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:17:51] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:17:51] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:17:51] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:17:51] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:17:51] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:17:51] PHP Stack trace:
+[24-Mar-2014 10:17:51] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:17:51] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:17:51] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:17:51] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:17:51] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:17:51] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:17:57] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:17:57] PHP Stack trace:
+[24-Mar-2014 10:17:57] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:17:57] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:17:57] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:17:57] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:17:57] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:17:57] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:17:57] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:17:57] PHP Stack trace:
+[24-Mar-2014 10:17:57] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:17:57] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:17:57] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:17:57] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:17:57] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:17:57] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:18:05] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:18:05] PHP Stack trace:
+[24-Mar-2014 10:18:05] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:18:05] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:18:05] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:18:05] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:18:05] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:18:05] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:18:05] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:18:05] PHP Stack trace:
+[24-Mar-2014 10:18:05] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:18:05] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:18:05] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:18:05] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:18:05] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:18:05] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:18:57] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:18:58] PHP Stack trace:
+[24-Mar-2014 10:18:58] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:18:58] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:18:58] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:18:58] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:18:58] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:18:58] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:18:58] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:18:58] PHP Stack trace:
+[24-Mar-2014 10:18:58] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:18:58] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:18:58] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:18:58] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:18:58] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:18:58] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:19:06] PHP Warning:  require(/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php): failed to open stream: No such file or directory in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:19:06] PHP Stack trace:
+[24-Mar-2014 10:19:06] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:19:06] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:19:06] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:19:06] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:19:06] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:19:06] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
+[24-Mar-2014 10:19:06] PHP Fatal error:  require(): Failed opening required '/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/PhpParser/Autoloader.php' (include_path='/var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/phpseclib/phpseclib/phpseclib:.:/usr/share/pear:/usr/share/php') in /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/nikic/php-parser/lib/bootstrap.php on line 3
+[24-Mar-2014 10:19:06] PHP Stack trace:
+[24-Mar-2014 10:19:06] PHP   1. {main}() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:0
+[24-Mar-2014 10:19:06] PHP   2. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/public/index.php:21
+[24-Mar-2014 10:19:06] PHP   3. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/bootstrap/autoload.php:17
+[24-Mar-2014 10:19:06] PHP   4. ComposerAutoloaderInit3a17e998e3b638b1f5b40cca258c9812::getLoader() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/autoload.php:7
+[24-Mar-2014 10:19:06] PHP   5. composerRequire3a17e998e3b638b1f5b40cca258c9812() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:52
+[24-Mar-2014 10:19:06] PHP   6. require() /var/lib/stickshift/530d09514382ec67130004f1/app-root/data/781800/larpay/vendor/composer/autoload_real.php:61
