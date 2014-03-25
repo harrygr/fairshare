@@ -17,6 +17,7 @@ Route::get('/', array('as'=>'home', function()
 }));
 
 // Route model bindings: auto-passes the model to the controller
+Route::model('user', 'User');
 Route::model('payment', 'Payment');
 Route::model('payer', 'Payer');
 Route::model('page', 'Page');
@@ -27,13 +28,21 @@ Route::group(array('before' => 'auth'), function(){
 	Route::get('/users', array('uses' => 'UsersController@index'));
 
 	Route::get('payers/add', array('as' => 'payers.add', 'uses' => 'PayersController@add'));
-	Route::get('payers/edit/{payer}', array('as' => 'payers.edit', 'uses' => 'PayersController@edit'));
-	Route::get('payers/', array('as' => 'payers.index', 'uses' => 'PayersController@index'));
+
+	Route::get('payers', array('as' => 'payers.index', 'uses' => 'PayersController@index'));
 
 	Route::get('payments/add', array('as' => 'payments.add', 'uses' => 'PaymentsController@add'));
 	Route::get('payments/reimburse', array('as' => 'payments.reimburse', 'uses' => 'PaymentsController@addReimbursement'));
-	Route::get('payments/edit/{payment}', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
+	
 	Route::get('statement', array('as' => 'payments.statement', 'uses' => 'PaymentsController@statement'));
+});
+
+Route::group(array('before' => array('auth', 'restrictPayers')), function(){
+	Route::get('payers/edit/{payer}', array('as' => 'payers.edit', 'uses' => 'PayersController@edit'));
+});
+
+Route::group(array('before' => array('auth', 'restrictPayments')), function(){
+	Route::get('payments/edit/{payment}', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
 });
 
 // must be logged in and check for XSS attacks
@@ -49,6 +58,8 @@ Route::group(array('before' => array('auth', 'csrf')), function(){
 
 // Confide routes
 Route::get( 'register', array( 'as' => 'users.create', 	'uses' => 'UserController@create'));
+Route::get( 'user/edit', array( 'as' => 'users.edit', 	'uses' => 'UserController@edit'));
+Route::put( 'user/update/{user}', array( 'as' => 'users.update', 	'uses' => 'UserController@update'));
 Route::post('user/store', array( 'as' => 'users.store', 	'uses' => 'UserController@store'));
 Route::get( 'login', array( 'as' => 'users.login', 	'uses' => 'UserController@login'));
 Route::post('login', array( 'as' => 'users.do_login', 	'uses' => 'UserController@do_login'));

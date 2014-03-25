@@ -9,7 +9,7 @@ class PayersController extends BaseController {
 	 */
 	public function index()
 	{
-		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
+		$payers = Auth::user()->payers()->get();
 
 		return View::make('payers.index')
 		->with('payers', $payers);

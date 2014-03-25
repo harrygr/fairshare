@@ -60,7 +60,7 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-fw fa-user"></span> {{ Auth::user()->username }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									
-									<li>{{ HTML::decode(HTML::linkRoute('users.dashboard', '<i class="fa fa-fw fa-gear"></i> Edit Profile')) }}</li>
+									<li>{{ HTML::decode(HTML::linkRoute('users.edit', '<i class="fa fa-fw fa-gear"></i> Edit Profile')) }}</li>
 									<li class="divider"></li>
 									<li>{{ HTML::decode(HTML::linkRoute('users.logout', '<i class="fa fa-fw fa-sign-out"></i> Sign Out')) }}</li>
 								</ul>

@@ -15,10 +15,41 @@ class UserController extends BaseController {
      * Displays the form for account creation
      *
      */
-    public function create()
-    {
+    public function create() {
         return View::make('users.register');
-        //return View::make(Config::get('confide::signup_form'));
+    }
+    /**
+     * Displays the form for account editing
+     *
+     */
+    public function edit() {
+        $user = Auth::user();
+        return View::make('users.edit')
+        ->with(compact('user'));
+    }
+
+    public function update(User $user){
+
+        $user->username = Input::get( 'username' );
+        $user->email = Input::get( 'email' );
+
+        if ( Input::get( 'password' ) !== '' ){
+            $user->password = Input::get( 'password' );
+        }
+        if( $user->amend() ){
+            return Redirect::route('users.dashboard')
+            ->with( 'message', 'Profile Updated' )
+            ->with('alert-class', 'alert-success');
+        } else {
+            // Get validation errors (see Ardent package)
+            $error = $user->errors()->all(':message');
+
+            return Redirect::action('UserController@edit')
+            ->withInput(Input::except('password'))
+            ->withErrors($error);
+        }
+        
+
     }
 
     /**
@@ -223,18 +254,19 @@ class UserController extends BaseController {
     }
 
     public function dashboard() {
-        $payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
+
+        $payers = Auth::user()->payers()->lists('name', 'id');
         $totals = array();
         $settles = array();
         if ( count($payers) ){
-                    $totals = Payment::payer_summary(Auth::user()->id);
-        $settles = Helper::settleUp($totals);
+            $totals = Payment::payer_summary(Auth::user()->id);
+            $settles = Helper::settleUp($totals);
         }
 
         return View::make('users.dashboard')
-            ->with(compact('totals'))
-            ->with(compact('settles'))
-            ->with(compact('payers'));
+        ->with(compact('totals'))
+        ->with(compact('settles'))
+        ->with(compact('payers'));
     }
 
 }

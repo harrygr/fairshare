@@ -33,16 +33,15 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
+Route::filter('auth', function() {
 	if (Auth::guest()) return Redirect::guest('/login')
 		->with('message', 'You must be logged in to access this area.')
 		->with('alert-class', 'alert-danger');
 });
 
 
-Route::filter('auth.basic', function()
-{
+
+Route::filter('auth.basic', function() {
 	return Auth::basic();
 });
 
@@ -79,4 +78,39 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Resource protection filters
+|--------------------------------------------------------------------------
+|
+| Stop users from viewing/editing other users' models
+| 
+*/
+
+//Payers
+Route::filter('restrictPayers', function($route) {
+$payer = $route->parameter('payer');
+
+    if (!Auth::user()->payers()->find($payer->id)) return Redirect::route('payers.index')
+    	->with('message', 'You can\'t see this as it doesn\'t belong to you.')
+    	->with('alert-class', 'alert-danger');
+});
+
+Route::filter('restrictPayments', function($route) {
+		$payment = $route->parameter('payment');
+
+		//Ensure the currently logged in user is the owner of this payment
+		$payment_user = DB::table('payers')
+		->select('user_id')
+		->join('payer_payment', 'payers.id', '=',  'payer_payment.payer_id')
+		->where('payer_payment.payment_id', '=', $payment->id)
+		->where('payers.user_id', '=', Auth::user()->id)
+		->groupBy('user_id')
+		->get();
+
+    if ( !$payment_user ) return Redirect::route('payments.statement')
+    	->with('message', 'You can\'t see this as it doesn\'t belong to you.')
+    	->with('alert-class', 'alert-danger');
 });

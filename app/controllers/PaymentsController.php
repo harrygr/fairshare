@@ -143,8 +143,8 @@ class PaymentsController extends BaseController {
 		PayerPayment::where('payment_id', '=', $payment->id)->delete();
 		$payment->delete();
 		return Redirect::route('payments.statement')
-		    ->with('message', 'Payment Deleted')
-		    ->with('alert-class', 'message-success');
+		->with('message', 'Payment Deleted')
+		->with('alert-class', 'message-success');
 	}
 
 	/**
@@ -165,6 +165,8 @@ class PaymentsController extends BaseController {
 		->groupBy('user_id')
 		->get();
 		if(isset($payment_user[0])){
+			// ensure the currently logged in user is alowed to edit this. 
+			// There must be a better way to acheive this
 			if ($payment_user[0]->user_id !== Auth::user()->id){
 				return Redirect::route('payments.statement')
 				->with('message', 'You can\'t edit this payment as you\'re not the correct user.')
@@ -241,39 +243,47 @@ class PaymentsController extends BaseController {
 
 	public function statement(){
 
+
         //Get all the payments for the logged in user
-		$payments = Payment::whereHas('payers', function($q){
+		$query = Payment::whereHas('payers', function($q){
 			$q->where('user_id', '=', Auth::user()->id); 
-		},'>=', DB::raw('1'))->get();
+		},'>=', DB::raw('1'));
+
+		if (Input::has('from') && Input::get('from')) $query->where('payment_date', '>=', Input::get('from'));
+		if (Input::has('to') && Input::get('to')) $query->where('payment_date', '>=', Input::get('to'));
+
+		$payments = $query->get();
+
 		
 		//lazy eager load the pivot data, which contains payer info for each payment
 		$payments = $payments->load(array(
 			'payers' => function($q){
 				$q->where('user_id', '=', Auth::user()->id);
-			}))->toArray();
+			}));
+
 
 		$totals = array();
 		$settles = array();
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
 
 		if ( $payments ) {
-			$payments = Payment::process_payment($payments);
+			$payment_data = Payment::process_payment($payments->toArray());
 
 			$totals = Payment::payer_summary(Auth::user()->id);
 			$settles = Helper::settleUp($totals);
 		} else {
-			$payments = array();
+			$payment_data = array();
 			//Display a message if there are no payers or payments. Payers need to be added first so we'll show that before.
 			if ( !$payers ){
-			    Session::flash('message', 'There are no payers. ' . HTML::linkRoute('payers.add', 'Add one') );
+				Session::flash('message', 'There are no payers. ' . HTML::linkRoute('payers.add', 'Add one') );
 			} else {
-			    Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
+				Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
 			}
 			Session::flash('alert-class', 'alert-info');
 		}
 
 		return View::make('payments.statement')
-		->with(compact('payments'))
+		->with(compact('payment_data'))
 		->with(compact('totals'))
 		->with(compact('payers'))
 		->with(compact('settles'));

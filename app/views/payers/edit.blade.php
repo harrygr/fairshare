@@ -27,7 +27,7 @@ Edit Payer
 </div>
 
 {{ Form::submit('Save Payer', array('class'=>'btn btn-primary')) }}
- <span class="glyphicon glyphicon-chevron-left"></span> {{ HTML::linkRoute('payers.index', 'Go Back') }}
+
 {{ Form::close() }}
 
 
