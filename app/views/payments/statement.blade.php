@@ -99,7 +99,7 @@ Statement
          {{ Form::input('date', 'to', Input::has('to') ? Input::get('to') : null, array('class'=>'form-control', 'placeholder' => 'To')) }}
      </div>
      {{ Form::submit('Filter', array('class'=>'btn btn-primary'))}}
-     {{ Form::close() }}
+     {{ Form::close() }}<br>
  </div>
 
 </div>

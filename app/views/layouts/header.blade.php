@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Larpay - 
+	<title>FairShare | 
 		@section('title')
 
 		@show
@@ -15,7 +15,15 @@
 	{{ HTML::script('js/bootstrap.min.js'); }}
 </head>
 <body>
-	<div id="wrap">
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 		<header>
 			<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container-fluid">
@@ -26,7 +34,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						{{ HTML::linkRoute('home', 'LaraPay', array(), array('class' => 'navbar-brand')) }}
+						{{ HTML::linkRoute('home', 'FairShare', array(), array('class' => 'navbar-brand')) }}
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						@if (Auth::check())

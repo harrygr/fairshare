@@ -18,11 +18,20 @@ Login
       <div class="form-group">
          {{ Form::label('password') }}
          {{ Form::password('password', array('class'=>'form-control', 'placeholder'=>'Password')) }}
+          <small>
+            {{ HTML::linkRoute('users.forgot_password', Lang::get('confide::confide.login.forgot_password')) }}
+            </small>
       </div>
+      <div class="form-group">
+         <label for="remember" class="checkbox">{{{ Lang::get('confide::confide.login.remember') }}}
+           <input type="hidden" name="remember" value="0">
+           <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+        </label>
+     </div>
 
-      {{ Form::submit('Login', array('class'=>'btn btn-primary'))}}
-      {{ HTML::linkRoute('users.forgot_password', 'Forgot Password') }}
-      {{ Form::close() }}
-   </div>
+     {{ Form::submit('Login', array('class'=>'btn btn-primary'))}}
+     
+     {{ Form::close() }}
+  </div>
 </div>
 @stop

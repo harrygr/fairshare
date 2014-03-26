@@ -15,6 +15,9 @@ Route::get('/', array('as'=>'home', function()
 {
 	return View::make('home');
 }));
+Route::get('about', array('as' => 'about', function(){
+	return View::make('pages.about');
+}));
 
 // Route model bindings: auto-passes the model to the controller
 Route::model('user', 'User');

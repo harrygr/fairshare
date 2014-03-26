@@ -250,7 +250,7 @@ class PaymentsController extends BaseController {
 		},'>=', DB::raw('1'));
 
 		if (Input::has('from') && Input::get('from')) $query->where('payment_date', '>=', Input::get('from'));
-		if (Input::has('to') && Input::get('to')) $query->where('payment_date', '>=', Input::get('to'));
+		if (Input::has('to') && Input::get('to')) $query->where('payment_date', '<=', Input::get('to'));
 
 		$payments = $query->get();
 

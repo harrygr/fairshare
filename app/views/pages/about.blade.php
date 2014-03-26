@@ -19,4 +19,7 @@ out who owes who how much. It'll also work out the simplest way for each person 
 <li>When someone makes a payment they're owed for just enter it in stating the amount each payer paid and whether they should be included.</li>
 <li>When you've built up a few payments and decided to pay someone back just add the reimbursement and FairShare will keep track.</li>
 </ul>
+@if (!Auth::user())
+<a href="{{ URL::route('users.create') }}" class="btn btn-lg btn-success">Sign Up Now</a>
+@endif
 @stop
