@@ -4,11 +4,9 @@
 
 <footer id="footer">
 	<div class="container">
+
 		<div class="col-md-6">
-			<p class="muted credit">FairShare project on {{ HTML::link('https://github.com/harrygr/larpay', 'Github') }}.</p>
-		</div>
-		<div class="col-md-6">
-			<div class="footer-item pull-right social-links">
+			<div class="footer-item social-links">
 				<span>
 					<div class="fb-like" data-href="{{ URL::action('home') }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 				</span>
@@ -19,6 +17,10 @@
 					<div class="g-plusone" data-size="medium" data-annotation="inline" data-width="120"></div>
 				</span>
 			</div>
+		</div>
+
+		<div class="col-md-6 text-right ">
+			<p class="muted credit">FairShare project on {{ HTML::link('https://github.com/harrygr/larpay', 'Github') }}.</p>
 		</div>
 
 	</div>
