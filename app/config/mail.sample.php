@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'no-reply@larapay.com', 'name' => 'Larapay'),
+	'from' => array('address' => 'no-reply@fairshare.harryg.me', 'name' => 'FairShare'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,6 +119,6 @@ return array(
 	|
 	*/
 
-	'pretend' => true,
+	'pretend' => false,
 
 );
