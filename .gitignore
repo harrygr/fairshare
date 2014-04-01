@@ -1,2 +1,3 @@
 app/config/app.php
 app/config/mail.php
+vendor/*
