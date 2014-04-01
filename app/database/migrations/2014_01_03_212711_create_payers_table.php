@@ -17,7 +17,7 @@ class CreatePayersTable extends Migration {
 			$table->string('name');
 			$table->string('email')->nullable();
 			$table->boolean('archived')->default(false);
-			$table->integer('user_id');
+			$table->unsignedInteger('user_id');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->timestamps();
 		});

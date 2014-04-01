@@ -14,8 +14,8 @@ class CreatePayerPaymentTable extends Migration {
 	{
 		Schema::create('payer_payment', function(Blueprint $table) {
 			$table->increments('id');
-			$table->integer('payer_id');
-			$table->integer('payment_id');
+			$table->unsignedInteger('payer_id');
+			$table->unsignedInteger('payment_id');
 			$table->foreign('payer_id')->references('id')->on('payers')->onDelete('cascade');
 			$table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 			$table->decimal('amount', 10, 2);
