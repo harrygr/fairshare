@@ -1,5 +1,5 @@
 @include('layouts.header')
-
+<div class="container">
 		<section class="row">
 			<div class="col-md-12">
 				@yield('content')
@@ -8,5 +8,6 @@
 				@yield('sidebar')
 			</aside> -->
 		</section>
+	</div>
 
 @include('layouts.footer')	

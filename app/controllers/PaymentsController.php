@@ -7,8 +7,7 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		return View::make('payments.index');
 	}
 
@@ -17,8 +16,7 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function add()
-	{
+	public function add() {
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 		return View::make('payments.add')->with('payers', $payers);
 	}
@@ -34,8 +32,7 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
 		if ($validator->passes()) {
@@ -77,8 +74,7 @@ class PaymentsController extends BaseController {
 		->withErrors($validator)->withInput();
 	}
 
-	public function storeReimbursement()
-	{
+	public function storeReimbursement() {
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
 		if ($validator->passes()) {
@@ -195,8 +191,7 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($payment)
-	{
+	public function update($payment) {
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
 		if ($validator->passes()) {
@@ -241,7 +236,7 @@ class PaymentsController extends BaseController {
 
 	}
 
-	public function statement(){
+	public function statement() {
 
 
         //Get all the payments for the logged in user

@@ -7,8 +7,7 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$payers = Auth::user()->payers()->get();
 
 		return View::make('payers.index')
@@ -20,8 +19,7 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function add()
-	{
+	public function add() {
 		return View::make('payers.add');
 	}
 
@@ -30,8 +28,7 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 		$validator = Validator::make(Input::all(), Payer::$rules);
 		if (Auth::check()){
 			if ($validator->passes()) {
@@ -65,8 +62,7 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
+	public function show($id) {
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 
 		return View::make('payers.show')
@@ -79,8 +75,7 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit(Payer $payer)
-	{
+	public function edit(Payer $payer) {
 		
 		return View::make('payers.edit')
 		->with(compact('payer'));
@@ -92,8 +87,7 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(Payer $payer)
-	{
+	public function update(Payer $payer) {
 		$validator = Validator::make(Input::all(), Payer::$rules);
 		if (Auth::check()){
 			if ($validator->passes()) {
@@ -126,8 +120,7 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		//
 	}
 

@@ -10,6 +10,7 @@
 	</title>
 
 	{{ HTML::style('//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css') }}
+	
 	{{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') }}
 	{{ HTML::style('css/main.css'); }}
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js') }}
@@ -82,11 +83,6 @@
 				</div>
 			</nav> 
 		</header>
-		<div id="container" class="container">
+		
+		@include('components.alerts')
 
-			{{-- Show the alerts --}}
-			<div class="row">
-				@if(Session::has('message'))
-				<div class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</div>
-				@endif
-			</div>

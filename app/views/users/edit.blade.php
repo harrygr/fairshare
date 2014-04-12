@@ -21,6 +21,7 @@ Update Profile
 			{{ Form::label('email') }}
 			{{ Form::text('email', $user->email, array('class'=>'form-control')) }}
 		</div>
+		<legend>Password <small>(Leave blank to leave unchanged)</small></legend>
 		<div class="form-group">
 			{{ Form::label('password') }}
 			{{ Form::password('password', array('class'=>'form-control')) }}
@@ -29,7 +30,7 @@ Update Profile
 			{{ Form::label('password_confirmation') }}
 			{{ Form::password('password_confirmation', array('class'=>'form-control')) }}
 		</div>
-		<p class="text-info">Leave password blank leave unchanged</p>
+		
 		{{ Form::submit('Save Profile', array('class'=>'btn btn-primary'))}}
 		{{ Form::close() }}
 	</div>

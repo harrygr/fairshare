@@ -48,8 +48,6 @@ class UserController extends BaseController {
             ->withInput(Input::except('password'))
             ->withErrors($error);
         }
-        
-
     }
 
     /**
@@ -99,8 +97,7 @@ class UserController extends BaseController {
      * Displays the login form
      *
      */
-    public function login()
-    {
+    public function login() {
         if( Confide::user() ) {
             // If user is logged, redirect to internal 
             // page, change it to '/admin', '/dashboard' or something
@@ -115,8 +112,7 @@ class UserController extends BaseController {
      * Attempt to do login
      *
      */
-    public function do_login()
-    {
+    public function do_login() {
         $input = array(
             'email'    => Input::get( 'username' ), // May be the username too
             'username' => Input::get( 'username' ), // so we have to pass both
@@ -163,19 +159,20 @@ class UserController extends BaseController {
      *
      * @param  string  $code
      */
-    public function confirm( $code )
-    {
+    public function confirm( $code ) {
         if ( Confide::confirm( $code ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
             return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
+            ->with( 'message', $notice_msg )
+            ->with( 'alert-class', 'alert-success');
         }
         else
         {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
             return Redirect::action('UserController@login')
-            ->with( 'error', $error_msg );
+            ->with( 'error', $error_msg )
+            ->with( 'alert-class', 'alert-danger');;
         }
     }
 
@@ -183,8 +180,7 @@ class UserController extends BaseController {
      * Displays the forgot password form
      *
      */
-    public function forgot_password()
-    {
+    public function forgot_password() {
         return View::make('users.forgot');
     }
 
@@ -201,7 +197,8 @@ class UserController extends BaseController {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
             return Redirect::action('UserController@forgot_password')
             ->withInput()
-            ->with( 'error', $error_msg );
+            ->with( 'message', $error_msg )
+            ->with( 'alert-class', 'alert-danger');;
         }
     }
 
@@ -209,8 +206,7 @@ class UserController extends BaseController {
      * Shows the change password form with the given token
      *
      */
-    public function reset_password( $token )
-    {
+    public function reset_password( $token ) {
         return View::make('users.reset')
         ->with('token', $token);
     }
@@ -219,8 +215,7 @@ class UserController extends BaseController {
      * Attempt change password of the user
      *
      */
-    public function do_reset_password()
-    {
+    public function do_reset_password() {
         $input = array(
             'token'=>Input::get( 'token' ),
             'password'=>Input::get( 'password' ),
@@ -238,7 +233,8 @@ class UserController extends BaseController {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
             return Redirect::action('UserController@reset_password', array('token'=>$input['token']))
             ->withInput()
-            ->with( 'error', $error_msg );
+            ->with( 'message', $error_msg )
+            ->with( 'alert-class', 'alert-danger');;
         }
     }
 
@@ -246,8 +242,7 @@ class UserController extends BaseController {
      * Log the user out of the application.
      *
      */
-    public function logout()
-    {
+    public function logout() {
         Confide::logout();
         
         return Redirect::to('/');

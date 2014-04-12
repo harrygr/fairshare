@@ -1,6 +1,5 @@
 body {
   padding-top: 70px;
-  margin-bottom: 70px;
 }
 .action-cell * {
   display: inline-block;
@@ -16,10 +15,16 @@ html {
   min-height: 100%;
   position: relative;
 }
+.welcome-panel {
+  color: #fff;
+  background-image: url('../img/london-night.jpg');
+  min-height: 500px;
+  background-size: cover;
+  margin-top: -9px;
+  margin-bottom: -11px;
+}
 #footer {
-  position: absolute;
-  bottom: 0;
-  height: 60px;
+  min-height: 60px;
   background-color: #efefef;
   width: 100%;
 }

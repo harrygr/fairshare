@@ -22,7 +22,7 @@ Basically the same as what [Laravel needs](http://laravel.com/docs/installation#
 Front-end is [Twitter Bootstrap](http://getbootstrap.com/).
 Feel free to fork and submit pull-requests for improvements and bug fixes.
 
-Demo/working deployment at [http://fairshare.harry.me](http://fairshare.harry.me).
+Demo/working deployment at [http://fairshare.harry.me](http://fairshare.harryg.me).
 
 ### License
 

@@ -1,5 +1,5 @@
 
-</div><!-- /container -->
+
 
 
 <footer id="footer">
@@ -20,7 +20,8 @@
 		</div>
 
 		<div class="col-md-6 text-right ">
-			<p class="muted credit">FairShare project on {{ HTML::link('https://github.com/harrygr/larpay', 'Github') }}.</p>
+			<p class="muted credit">FairShare project on {{ HTML::link('https://github.com/harrygr/larpay', 'Github') }}. </p>
+			<p class="text-muted small">Front page image credit: {{ HTML::link('https://www.flickr.com/photos/100915417@N07/', 'Charlie Marshall' ) }}</p>
 		</div>
 
 	</div>
