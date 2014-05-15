@@ -246,7 +246,7 @@ class PaymentsController extends BaseController {
 
 		if (Input::has('from') && Input::get('from')) $query->where('payment_date', '>=', Input::get('from'));
 		if (Input::has('to') && Input::get('to')) $query->where('payment_date', '<=', Input::get('to'));
-
+		$query->orderBy('payments.payment_date', 'DESC');
 		$payments = $query->get();
 
 		
