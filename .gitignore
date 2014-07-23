@@ -1,3 +1,4 @@
 .env.local.php
 .env.production.php
+.env_name.php
 vendor/*
