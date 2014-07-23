@@ -16,6 +16,12 @@ class UserController extends BaseController {
      *
      */
     public function create() {
+        if (Auth::check())
+        {
+            return Redirect::back()
+            ->with( 'message', 'You are already logged in!' )
+            ->with('alert-class', 'alert-danger');
+        }
         return View::make('users.register');
     }
     /**

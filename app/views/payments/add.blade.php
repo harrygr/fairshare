@@ -5,7 +5,7 @@ Add Payment
 @stop
 
 @section('content')
-<div class="row">
+<div class="col-md-12">
 
       <h2>Add a new payment</h2>
       @if (count($payers))

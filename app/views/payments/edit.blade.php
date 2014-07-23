@@ -6,8 +6,7 @@ Edit Payment
 
 @section('content')
 
-
-<div class="row">
+<div class="col-md-12">
 
 		<h2>Edit payment</h2>
 		{{ Form::model($payment, array('route'=>array('payments.update', $payment->id), 'class'=>'form-horizontal', 'method' => 'put')) }}
@@ -19,7 +18,5 @@ Edit Payment
 		</div>
 
 		{{ Form::close() }}
-
-
 </div>
 @stop

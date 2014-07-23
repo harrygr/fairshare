@@ -7,7 +7,7 @@ Register
 @section('content')
 <div class="row">
    <div class="col-md-6">
-     <h2 class="form-signup-heading">Please Register</h2>
+     <h2 class="form-signup-heading">Register</h2>
      {{ Form::open(array('route'=>'users.store', 'class'=>'form-signup')) }}
      
      @include('components.validationerrors')

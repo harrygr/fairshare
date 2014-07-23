@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'no-reply@fairshare.harryg.me', 'name' => 'FairShare'),
+	'from' => array('address' => $_ENV['MAIL_FROM_ADDRESS'], 'name' => $_ENV['MAIL_FROM_NAME']),
 
 	/*
 	|--------------------------------------------------------------------------

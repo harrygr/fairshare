@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="row">
+
 	<div class="col-md-6">
 		<h1>Payers Index page</h1>
 		<p>Here are the payers</p>
@@ -13,5 +13,5 @@
 		</ul>
 		<p>{{ HTML::decode(HTML::linkRoute('payers.add', '<i class="fa fa-plus"></i> Add a Payer', null, array('class' => 'btn btn-success'))) }}</p>
 	</div>
-</div>
+
 @stop

@@ -5,7 +5,7 @@ Add Payer
 @stop
 
 @section('content')
-<div class="row">
+
    <div class="col-md-6">
       {{ Form::open(array('route'=>'payers.store', 'class'=>'form-signup')) }}
       <h2 class="form-signup-heading">Add a new payer</h2>
@@ -31,5 +31,5 @@ Add Payer
       {{ Form::submit('Add Payer', array('class'=>'btn btn-primary'))}}
       {{ Form::close() }}
    </div>
-</div>
+
 @stop

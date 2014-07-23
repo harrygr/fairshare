@@ -1,4 +1,3 @@
-app/config/app.php
-app/config/mail.php
-app/config/database.php
+.env.local.php
+.env.production.php
 vendor/*

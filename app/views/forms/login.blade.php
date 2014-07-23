@@ -1,14 +1,5 @@
-@extends('layouts.master')
-
-@section('title')
-Login
-@stop
-
-@section('content')
-<div class="row">
-   <div class="col-md-6">
+      @if (!Auth::check())
       {{ Form::open(array('route'=>'users.do_login', 'class'=>'form-signin')) }}
-      <h2 class="form-signup-heading">Log In Here</h2>
 
       <div class="form-group">
          {{ Form::label('username') }}
@@ -32,6 +23,7 @@ Login
      {{ Form::submit('Login', array('class'=>'btn btn-primary'))}}
      
      {{ Form::close() }}
-  </div>
-</div>
-@stop
+     @else
+     <h2>Logged in as {{ Auth::user()->username }}</h2>
+     <p>{{ HTML::decode(HTML::linkRoute('users.logout', '<span class="btn btn-primary"><i class="fa fa-fw fa-sign-out"></i> Sign Out</span>')) }}</p>
+     @endif

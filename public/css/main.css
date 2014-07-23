@@ -23,6 +23,12 @@ html {
   margin-top: -9px;
   margin-bottom: -11px;
 }
+.welcome-panel .jumbotron {
+  background-color: transparent;
+}
+.welcome-panel .home-login {
+  padding: 7%;
+}
 #footer {
   min-height: 60px;
   background-color: #efefef;
