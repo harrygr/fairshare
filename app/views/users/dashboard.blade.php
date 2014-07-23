@@ -27,7 +27,10 @@ Dashboard
 @else
 <p>Nothing to see here yet</p>
 @endif
-<p>{{ HTML::decode(HTML::linkRoute('payers.add', '<i class="fa fa-plus"></i> Add a Payer', null, array('class' => 'btn btn-success'))) }}</p>
+<p>
+{{ HTML::decode(HTML::linkRoute('payments.add', '<i class="fa fa-plus"></i> Add a Payment', null, array('class' => 'btn btn-success'))) }} 
+{{ HTML::decode(HTML::linkRoute('payers.add', '<i class="fa fa-plus"></i> Add a Payer', null, array('class' => 'btn btn-success'))) }}
+</p>
 <div class="well">
 
     @include('components.settle-up')
