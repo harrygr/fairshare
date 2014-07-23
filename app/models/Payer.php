@@ -6,7 +6,7 @@ class Payer extends Eloquent {
 	
 
 	public static $rules = array(
-		'name'=>'required|alpha|min:2',
+		'name'=>'required|min:2',
 		);
 
 	public function users(){
