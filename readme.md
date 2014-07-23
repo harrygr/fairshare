@@ -7,12 +7,12 @@ The statement page will show a summary of all the payments included how much eac
 
 ### Requirements
 
-Basically the same as what [Laravel needs](http://laravel.com/docs/installation#server-requirements): a working webserver with PHP 5+ and a MySQL database. I have plans however to switch to SQLite although you are free to choose your database in the Laravel config.
+Basically the same as what [Laravel needs](http://laravel.com/docs/installation#server-requirements): a working webserver with PHP 5.4+ and a database.
 
 ### Install
 
 - Clone into your working directory
-- Edit `app.sample.php`, `database.sample.php` and `mail.sample.php` with your settings and save as `app.php`, `database.php` and `mail.php`
+- Creat and populate a `.env.environment.php` file with the app config. (See `.env.example.php`).
 - Run `composer install` (with globally-installed composer of course). This will install all the dependencies
 - Run `php artisan migrate` to generate the tables in your database
 - (Optional) `php artisan db:seed` to populate with demo data.
