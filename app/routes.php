@@ -13,7 +13,7 @@
 
 Route::get('/', array('as'=>'home', function()
 {
-	return View::make('home');
+	return View::make('home')->with('body_class', 'page_home');
 }));
 Route::get('about', array('as' => 'about', function(){
 	return View::make('pages.about');
@@ -41,11 +41,11 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => array('auth', 'restrictPayers')), function(){
-	Route::get('payers/edit/{payer}', array('as' => 'payers.edit', 'uses' => 'PayersController@edit'));
+	Route::get('payers/{payer}/edit', array('as' => 'payers.edit', 'uses' => 'PayersController@edit'));
 });
 
 Route::group(array('before' => array('auth', 'restrictPayments')), function(){
-	Route::get('payments/edit/{payment}', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
+	Route::get('payments/{payment}/edit', array('as' => 'payments.edit', 'uses' => 'PaymentsController@edit'));
 });
 
 // must be logged in and check for XSS attacks

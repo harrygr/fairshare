@@ -1,5 +1,18 @@
+@import 'fonts.less' ;
 body {
 	padding-top: 70px;
+	font-family: 'museo_slab500';
+	&.page_home{
+		background-image: url('../img/london-night.jpg');
+		min-height: 500px;
+		background-size:cover;		
+	}
+}
+h1, h2, h3, h4, h5 {
+		font-family: 'museo_slab500';
+}
+.statement-actions {
+	min-width:50px;
 }
 .action-cell *{
 	display:inline-block;
@@ -19,9 +32,7 @@ html{
 }
 .welcome-panel{
 	color:#fff;
-	background-image: url('../img/london-night.jpg');
-	min-height: 500px;
-	background-size:cover;
+
 	margin-top: -9px;
 	margin-bottom: -11px;
 	.jumbotron{

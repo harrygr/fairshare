@@ -60,6 +60,7 @@ class PaymentsController extends BaseController {
 			$payment->payment_date = Input::get('payment_date');
 			$payment->company = Input::get('company');
 			$payment->item = Input::get('item');
+			$payment->comment = Input::get('comment');
 			$payment->save();
 
 			//Save the amount each payer paid
@@ -218,6 +219,7 @@ class PaymentsController extends BaseController {
 			$payment->payment_date = Input::get('payment_date');
 			$payment->company = Input::get('company');
 			$payment->item = Input::get('item');
+			$payment->comment = Input::get('comment');
 			$payment->save();
 
 			//Save the amount each payer paid

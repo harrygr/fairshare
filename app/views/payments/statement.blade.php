@@ -21,7 +21,7 @@ Statement
           @endforeach
         </tr>
         <tr>
-          <th>Action</th>
+          <th class="statement-actions">Action</th>
           <th>Date</th>
           <th>Company</th>
           <th>Item</th>
@@ -38,7 +38,7 @@ Statement
       <tbody>
         @foreach ($payment_data as $payment)
         <tr>
-          <td>
+          <td class="statement-actions">
             <div class="action-cell">
               {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="fa fa-edit"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
               {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="fa fa-trash-o"></i>') }}

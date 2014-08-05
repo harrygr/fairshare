@@ -3,49 +3,58 @@
 
 <?php $label_attributes = array('class'=>'col-sm-2 control-label') ?>
 <div class="col-md-6">
-<div class="form-group">
+  <div class="form-group">
     {{ Form::label('payment_date', 'Payment Date', $label_attributes) }}
     <div class="col-sm-10">
-   {{ Form::input('date', 'payment_date', date('Y-m-d'), array('class'=>'form-control')) }}
+     {{ Form::input('date', 'payment_date', date('Y-m-d'), array('class'=>'form-control')) }}
    </div>
-</div>
+ </div>
 
-<div class="form-group">
-    {{ Form::label('company', 'Company', $label_attributes) }}
-    <div class="col-sm-10">
+ <div class="form-group">
+  {{ Form::label('company', 'Company', $label_attributes) }}
+  <div class="col-sm-10">
    {{ Form::text('company', null, array('class'=>'form-control', 'placeholder'=>'Company')) }}
-   </div>
+ </div>
 </div>
 
 <div class="form-group">
-    {{ Form::label('item', 'Item', $label_attributes) }}
-    <div class="col-sm-10">
+  {{ Form::label('item', 'Item', $label_attributes) }}
+  <div class="col-sm-10">
    {{ Form::text('item', null, array('class'=>'form-control', 'placeholder'=>'Item')) }}
-   </div>
+ </div>
 </div>
+
+<div class="form-group">
+  {{ Form::label('comment', 'Comment', $label_attributes) }}
+  <div class="col-sm-10">
+   {{ Form::textarea('comment', null, array('class'=>'form-control', 'placeholder'=>'Optional description of the payment')) }}
+ </div>
+
+</div>
+
 </div>
 <div class="col-md-6">
-<legend>Payer Details</legend>
-@foreach ($payers as $payer)
+  <legend>Payer Details</legend>
+  @foreach ($payers as $payer)
 
-   <div class="form-group">
-      <?php 
-      $amount = isset($pps[$payer->id]) ? $pps[$payer->id]['amount'] : number_format(0,2); 
-      $pays = isset($pps[$payer->id]) ? $pps[$payer->id]['pays'] : true; 
-      ?>
-      {{ Form::label($payer->id . '-amount', $payer->name, $label_attributes) }} 
-       <div class="col-sm-6">
+  <div class="form-group">
+    <?php 
+    $amount = isset($pps[$payer->id]) ? $pps[$payer->id]['amount'] : number_format(0,2); 
+    $pays = isset($pps[$payer->id]) ? $pps[$payer->id]['pays'] : true; 
+    ?>
+    {{ Form::label($payer->id . '-amount', $payer->name, $label_attributes) }} 
+    <div class="col-sm-6">
       {{ Form::input('number', $payer->id . '-amount', $amount, array('class'=>'form-control', 'step' => 'any', 'value' => 0)) }}
-      </div>
-       <div class="col-sm-4 control-label">
+    </div>
+    <div class="col-sm-4 control-label">
 
-        <label>{{ Form::checkbox($payer->id . '-pays', $payer->id . '-pays', $pays) }} Pays</label>
+      <label>{{ Form::checkbox($payer->id . '-pays', $payer->id . '-pays', $pays) }} Pays</label>
 
-      </div>
-   </div>
+    </div>
+  </div>
 
 
- <br/>
-@endforeach
+  <br/>
+  @endforeach
 </div>
 

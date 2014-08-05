@@ -13,10 +13,12 @@
 	
 	{{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') }}
 	{{ HTML::style('css/main.css'); }}
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js') }}
-	{{ HTML::script('js/bootstrap.min.js'); }}
+
+
+	<link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.png') }}"/>
+
 </head>
-<body>
+<body class="{{ $body_class or '' }}">
 	<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

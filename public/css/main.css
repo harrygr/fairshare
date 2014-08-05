@@ -1,5 +1,28 @@
+@font-face {
+  font-family: 'museo_slab500';
+  src: url('../fonts/Museo_Slab_500_2-webfont.eot');
+  src: url('../fonts/Museo_Slab_500_2-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Museo_Slab_500_2-webfont.woff') format('woff'), url('../fonts/Museo_Slab_500_2-webfont.ttf') format('truetype'), url('../fonts/Museo_Slab_500_2-webfont.svg#museo_slab500') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   padding-top: 70px;
+  font-family: 'museo_slab500';
+}
+body.page_home {
+  background-image: url('../img/london-night.jpg');
+  min-height: 500px;
+  background-size: cover;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'museo_slab500';
+}
+.statement-actions {
+  min-width: 50px;
 }
 .action-cell * {
   display: inline-block;
@@ -17,9 +40,6 @@ html {
 }
 .welcome-panel {
   color: #fff;
-  background-image: url('../img/london-night.jpg');
-  min-height: 500px;
-  background-size: cover;
   margin-top: -9px;
   margin-bottom: -11px;
 }
