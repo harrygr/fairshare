@@ -21,15 +21,21 @@ h4,
 h5 {
   font-family: 'museo_slab500';
 }
-.statement-actions {
-  min-width: 50px;
+.overflow-scroll {
+  overflow: scroll;
 }
-.action-cell * {
+#statement .statement-actions {
+  min-width: 68px;
+}
+#statement .action-cell * {
   display: inline-block;
   float: left;
 }
-.action-cell .btn {
+#statement .action-cell .btn {
   padding: 2px;
+}
+#statement .date-cell {
+  min-width: 82px;
 }
 header .fa {
   opacity: 0.65;

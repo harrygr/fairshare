@@ -4,7 +4,7 @@ class Payment extends Eloquent {
 	protected $guarded = array();
 
 	public static $rules = array(
-   'payment_date' => 'required',
+   'payment_date' => 'required|date',
    'company' => 'required',
    'item' => 'required'
    );

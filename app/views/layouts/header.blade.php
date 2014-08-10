@@ -9,7 +9,7 @@
 		@show
 	</title>
 
-	{{ HTML::style('//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css') }}
+	{{ HTML::style('//netdna.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css') }}
 	
 	{{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') }}
 	{{ HTML::style('css/main.css'); }}
@@ -69,7 +69,7 @@
 									<li>{{ HTML::linkRoute('users.create', 'Register') }}</li>
 								</ul>
 								@else
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-fw fa-user"></span> {{ Auth::user()->username }} <b class="caret"></b></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-fw fa-user"></span> {{{ Auth::user()->username }}} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									
 									<li>{{ HTML::decode(HTML::linkRoute('users.edit', '<i class="fa fa-fw fa-gear"></i> Edit Profile')) }}</li>

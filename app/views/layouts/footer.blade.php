@@ -23,7 +23,7 @@
 	</div>
 </footer>
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js') }}
-{{ HTML::script('js/bootstrap.min.js'); }}
+{{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'); }}
 {{ HTML::script('js/bootbox.min.js') }}
 {{ HTML::script('js/larpay.scripts.js'); }}
 

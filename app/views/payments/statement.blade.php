@@ -10,9 +10,9 @@ Statement
 
 @if (count($payers))
 
-<div class="col-md-12">
+<div class="col-md-12 overflow-scroll">
   <div class="table-responsive">
-    <table class='table table-condensed' style='font-size:85%;'>
+    <table id="statement" class='table table-condensed' style='font-size:85%;'>
       <thead>
         <tr>
           <th colspan='4'></th>
@@ -42,11 +42,14 @@ Statement
             <div class="action-cell">
               {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="fa fa-edit"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
               {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="fa fa-trash-o"></i>') }}
+              @if ($payment['comment'])
+              <a href="#" class="btn btn-link" data-toggle="popover" data-placement="right" data-content="{{{ $payment['comment'] }}}"><i class="fa fa-info-circle"></i></a>
+              @endif
             </div>
           </td>
-          <td><time datetime="{{ $payment['payment_date'] }}">{{ $payment['payment_date'] }}</time></td>
-          <td>{{ $payment['company'] }}</td>
-          <td>{{ $payment['item'] }}</td>
+          <td class="date-cell"><time datetime="{{{ $payment['payment_date'] }}}">{{ $payment['payment_date'] }}</time></td>
+          <td>{{{ $payment['company'] }}}</td>
+          <td>{{{ $payment['item'] }}}</td>
           <?php $shaded = true; ?>
           @foreach ($payers as $payer_id => $payer)
           @if ( isset($payment['payers'][$payer_id]) )
