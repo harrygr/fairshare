@@ -6,7 +6,7 @@
   <div class="form-group">
     {{ Form::label('payment_date', 'Payment Date', $label_attributes) }}
     <div class="col-sm-10">
-     {{ Form::input('date', 'payment_date', date('Y-m-d'), array('class'=>'form-control')) }}
+     {{ Form::input('date', 'payment_date', isset($payment) ? null : date('Y-m-d'), array('class'=>'form-control')) }}
    </div>
  </div>
 
