@@ -24,6 +24,12 @@ h5 {
 .overflow-scroll {
   overflow: scroll;
 }
+.form-inline {
+  display: inline;
+}
+.baseline {
+  vertical-align: baseline;
+}
 #statement .statement-actions {
   min-width: 68px;
 }

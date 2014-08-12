@@ -240,23 +240,7 @@ class PaymentsController extends BaseController {
 
 	public function statement() {
 
-
-        //Get all the payments for the logged in user
-		$query = Payment::whereHas('payers', function($q){
-			$q->where('user_id', '=', Auth::user()->id); 
-		},'>=', DB::raw('1'));
-
-		if (Input::has('from') && Input::get('from')) $query->where('payment_date', '>=', Input::get('from'));
-		if (Input::has('to') && Input::get('to')) $query->where('payment_date', '<=', Input::get('to'));
-		$query->orderBy('payments.payment_date', 'DESC');
-		$payments = $query->get();
-
-		
-		//lazy eager load the pivot data, which contains payer info for each payment
-		$payments = $payments->load(array(
-			'payers' => function($q){
-				$q->where('user_id', '=', Auth::user()->id);
-			}));
+		$payments = Payment::getPayments(Input::get('from', null), Input::get('to', null));
 
 
 		$totals = array();
@@ -284,6 +268,20 @@ class PaymentsController extends BaseController {
 		->with(compact('totals'))
 		->with(compact('payers'))
 		->with(compact('settles'));
+	}
+	public function summary()
+	{
+		$payments = Payment::getPayments(Input::get('from', null), Input::get('to', null));
+		if ( $payments ) {
+			$payment_data = Payment::process_payment($payments->toArray());
+
+		} else {
+			//Display a message if there are no payers or payments. Payers need to be added first so we'll show that before.
+			Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
+			Session::flash('alert-class', 'alert-info');
+		}
+		return View::make('payments.summary')
+		->with(compact(['payments']));
 	}
 
 }

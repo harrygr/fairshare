@@ -55,6 +55,7 @@
 							<li>{{ HTML::decode(HTML::linkRoute('payments.add', '<i class="fa fa-fw fa-gbp"></i> Add Payment')) }}</li>
 							<li>{{ HTML::linkRoute('payments.reimburse', 'Add Reimbursement') }}</li>
 							<li>{{ HTML::decode(HTML::link('/statement', '<i class="fa fa-fw fa-list"></i> Statement')) }}</li>
+							<li>{{ HTML::decode(HTML::link('/payments/summary', 'Payments Summary')) }}</li>
 						</ul> 
 						@endif
 

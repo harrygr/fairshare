@@ -36,6 +36,7 @@ Route::group(array('before' => 'auth'), function(){
 
 	Route::get('payments/add', array('as' => 'payments.add', 'uses' => 'PaymentsController@add'));
 	Route::get('payments/reimburse', array('as' => 'payments.reimburse', 'uses' => 'PaymentsController@addReimbursement'));
+	Route::get('payments/summary', ['as' => 'payments.summary', 'uses' => 'PaymentsController@summary']);
 	
 	Route::get('statement', array('as' => 'payments.statement', 'uses' => 'PaymentsController@statement'));
 });

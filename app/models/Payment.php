@@ -14,7 +14,7 @@ class Payment extends Eloquent {
    ->withPivot('amount', 'pays')
    ->withTimestamps();
  }
- 
+ public $payments;
  /**
   * Clean up the query data and return an array that's easy to output in a view, with payment totals, fair share etc.
   * 
@@ -22,35 +22,58 @@ class Payment extends Eloquent {
   */ 
  public static function process_payment($payments){
 
-		foreach ($payments as $pmt_id => $payment){
+  foreach ($payments as $pmt_id => $payment){
 
 			//get the total for the payment and the number of people included
-			$pmt_sum = 0; $pyrs_sum = 0;
-			foreach ($payment['payers'] as $payer){
-				$pmt_sum += $payer['pivot']['amount'];
-				$pyrs_sum += $payer['pivot']['pays'];	
-			}
+   $pmt_sum = 0; $pyrs_sum = 0;
+   foreach ($payment['payers'] as $payer){
+    $pmt_sum += $payer['pivot']['amount'];
+    $pyrs_sum += $payer['pivot']['pays'];	
+  }
 
-			$fair_share = $pyrs_sum > 0 ? $pmt_sum / $pyrs_sum : 0;
-			$payments[$pmt_id]['total'] = $pmt_sum;
-			$payments[$pmt_id]['fair_share'] = $fair_share;
+  $fair_share = $pyrs_sum > 0 ? $pmt_sum / $pyrs_sum : 0;
+  $payments[$pmt_id]['total'] = $pmt_sum;
+  $payments[$pmt_id]['fair_share'] = $fair_share;
 
-			foreach ($payment['payers'] as $pyr_id => $payer){
-				$pyr_fs = $fair_share * $payer['pivot']['pays'];
-				$payments[$pmt_id]['payers'][$pyr_id]['pivot']['fair_share'] = $pyr_fs;
-				$payments[$pmt_id]['payers'][$pyr_id]['pivot']['owes'] = $pyr_fs - $payer['pivot']['amount'];
-				$payer_id = $payer['pivot']['payer_id'];
-				$payments[$pmt_id]['payers_tmp'][$payer_id] = $payments[$pmt_id]['payers'][$pyr_id];
-			}
-			$payments[$pmt_id]['payers'] = $payments[$pmt_id]['payers_tmp'];
-			unset($payments[$pmt_id]['payers_tmp']);
-		}
-		return $payments;
-	}
+  foreach ($payment['payers'] as $pyr_id => $payer){
+    $pyr_fs = $fair_share * $payer['pivot']['pays'];
+    $payments[$pmt_id]['payers'][$pyr_id]['pivot']['fair_share'] = $pyr_fs;
+    $payments[$pmt_id]['payers'][$pyr_id]['pivot']['owes'] = $pyr_fs - $payer['pivot']['amount'];
+    $payer_id = $payer['pivot']['payer_id'];
+    $payments[$pmt_id]['payers_tmp'][$payer_id] = $payments[$pmt_id]['payers'][$pyr_id];
+  }
+  $payments[$pmt_id]['payers'] = $payments[$pmt_id]['payers_tmp'];
+  unset($payments[$pmt_id]['payers_tmp']);
+}
+return $payments;
+}
+public static function getPayments($start = null, $end = null)
+{
+
+    //Get all the payments for the logged in user
+  $query = Payment::whereHas('payers', function($q){
+    $q->where('user_id', '=', Auth::user()->id); 
+  },'>=', DB::raw('1'));
+
+  if ($start) $query->where('payment_date', '>=', $start);
+  if ($end) $query->where('payment_date', '<=', $end);
+
+  $query->orderBy('payments.payment_date', 'DESC');
+  $payments = $query->get();
+
+
+    //lazy eager load the pivot data, which contains payer info for each payment
+  $payments = $payments->load(array(
+    'payers' => function($q){
+      $q->where('user_id', '=', Auth::user()->id);
+    }));
+
+  return $payments;
+}
 
 
 
- public static function payer_summary($user_id){
+public static function payer_summary($user_id){
   $totals = DB::table('payers')
   ->join('payer_payment', 'payers.id', '=', 'payer_payment.payer_id')
   ->join(DB::raw('(SELECT payment_id,
