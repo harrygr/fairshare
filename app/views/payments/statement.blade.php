@@ -69,7 +69,7 @@ Statement
       </tbody>
       <tfoot>
         <tr>
-         <th colspan="4" >Totals</th>
+         <th colspan="4" >Totals (all payments)</th>
          <?php $shaded = true; ?>
          @foreach ($payers as $payer_id => $payer)
          @if ( isset($totals[$payer_id]) )
@@ -95,11 +95,11 @@ Statement
   {{ Form::open(array('route'=>'payments.statement', 'class'=>'form-statementdate form-inline', 'method' => 'get')) }}
   <div class="form-group">
    {{ Form::label('from') }}
-   {{ Form::input('date', 'from', Input::has('from') ? Input::get('from') : null, array('class'=>'form-control', 'placeholder' => 'From')) }}
+   {{ Form::input('date', 'from', Input::get('from', null), array('class'=>'form-control', 'placeholder' => 'From')) }}
  </div>
  <div class="form-group">
    {{ Form::label('to') }}
-   {{ Form::input('date', 'to', Input::has('to') ? Input::get('to') : null, array('class'=>'form-control', 'placeholder' => 'To')) }}
+   {{ Form::input('date', 'to', Input::get('to', null), array('class'=>'form-control', 'placeholder' => 'To')) }}
  </div>
  {{ Form::submit('Filter', array('class'=>'btn btn-primary'))}}
  {{ Form::close() }}<br>
