@@ -13,10 +13,11 @@
             {{ HTML::linkRoute('users.forgot_password', Lang::get('confide::confide.login.forgot_password')) }}
             </small>
       </div>
-      <div class="form-group">
-         <label for="remember" class="checkbox">{{{ Lang::get('confide::confide.login.remember') }}}
+      <div class="checkbox">
+         <label>
            <input type="hidden" name="remember" value="0">
            <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+          {{{ Lang::get('confide::confide.login.remember') }}}
         </label>
      </div>
 
