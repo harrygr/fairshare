@@ -30,6 +30,9 @@ h5 {
 .baseline {
   vertical-align: baseline;
 }
+#statement td {
+  white-space: nowrap;
+}
 #statement .statement-actions {
   min-width: 68px;
 }

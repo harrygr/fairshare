@@ -12,7 +12,7 @@ Statement
 
 <div class="col-md-12 overflow-scroll">
   <div class="table-responsive">
-    <table id="statement" class='table table-condensed' style='font-size:85%;'>
+    <table id="statement" class='table table-condensed table-striped' style='font-size:85%;'>
       <thead>
         <tr>
           <th colspan='4'></th>
