@@ -1,7 +1,8 @@
-@import 'fonts.less' ;
+//@import 'fonts.less' ;
+@font-family-serif:       'Roboto Slab', 'museo_slab500', serif;
 body {
+	font-family: @font-family-serif;
 	padding-top: 70px;
-	font-family: 'museo_slab500';
 	&.page_home{
 		background-image: url('../img/london-night.jpg');
 		min-height: 500px;
@@ -9,10 +10,13 @@ body {
 	}
 }
 h1, h2, h3, h4, h5 {
-	font-family: 'museo_slab500';
+	font-family: @font-family-serif;
+}
+.top-buffer {
+	margin-top: 15px;
 }
 .overflow-scroll {
-	overflow: scroll;
+	overflow-x: scroll;
 }
 .form-inline {
 	display: inline;

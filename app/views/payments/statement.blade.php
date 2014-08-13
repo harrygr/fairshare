@@ -91,7 +91,7 @@ Statement
 </div>
 
 
-<div class="col-md-12">
+<div class="col-md-12 top-buffer">
   {{ Form::open(array('route'=>'payments.statement', 'class'=>'form-statementdate form-inline', 'method' => 'get')) }}
   <div class="form-group">
    {{ Form::label('from') }}
@@ -111,7 +111,7 @@ Statement
 <p>No payers yet. {{ HTML::linkRoute('payers.add', 'Add a Payer') }}</p>
 @endif
 
-<div class="col-md-12">
+<div class="col-md-12 top-buffer">
   <div class="well">
     @include('components.settle-up')
   </div>
