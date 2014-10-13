@@ -28,6 +28,7 @@ h5 {
 }
 #statement td {
   white-space: nowrap;
+  vertical-align: middle;
 }
 #statement .statement-actions {
   min-width: 68px;

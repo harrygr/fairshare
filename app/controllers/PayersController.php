@@ -7,7 +7,8 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index() 
+	{
 		$payers = Auth::user()->payers()->get();
 
 		return View::make('payers.index')
@@ -19,7 +20,8 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function add() {
+	public function add() 
+	{
 		return View::make('payers.add');
 	}
 
@@ -28,16 +30,21 @@ class PayersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store() {
+	public function store() 
+	{
 		$validator = Validator::make(Input::all(), Payer::$rules);
-		if (Auth::check()){
-			if ($validator->passes()) {
+		if (Auth::check())
+		{
+			if ($validator->passes()) 
+			{
       // validation has passed, save user in DB
 				$payer = new Payer;
 				$payer->name = Input::get('name');
 				$payer->email = Input::get('email');
 				$payer->user_id = Auth::user()->id;
 				$payer->save();
+
+				Payment::clearPaymentCaches();
 
 				return Redirect::to('payers/')
 				->with('message', 'Payer Added!')
@@ -62,7 +69,8 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id) {
+	public function show($id) 
+	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 
 		return View::make('payers.show')
@@ -75,7 +83,8 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit(Payer $payer) {
+	public function edit(Payer $payer) 
+	{
 		
 		return View::make('payers.edit')
 		->with(compact('payer'));
@@ -87,21 +96,25 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(Payer $payer) {
+	public function update(Payer $payer) 
+	{
 		$validator = Validator::make(Input::all(), Payer::$rules);
-		if (Auth::check()){
-			if ($validator->passes()) {
-      // validation has passed, save user in DB
-				//$payer = Payer::find(Input::get('id'));
+		if (Auth::check())
+		{
+			if ($validator->passes()) 
+			{
+      			// validation has passed, save user in DB
 				$payer->name = Input::get('name');
 				$payer->email = Input::get('email');
 				$payer->save();
+
+				Payment::clearPaymentCaches();
 
 				return Redirect::to('payers/')
 				->with('message', 'Payer Updated!')
 				->with('alert-class', 'alert-success');
 			} else {
-      // validation has failed, display error messages 
+      			// validation has failed, display error messages 
 				return Redirect::route('payers.edit', Input::get('id') )
 				->with('message', 'The following errors occurred')
 				->with('alert-class', 'alert-danger')
@@ -120,7 +133,8 @@ class PayersController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id) {
+	public function destroy($id) 
+	{
 		//
 	}
 

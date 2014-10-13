@@ -1,1 +1,1 @@
-$(function(){$("form.confirm-form").submit(function(){var e=this;event.preventDefault();bootbox.confirm("Are you sure?",function(t){t&&e.submit()})});$("[data-toggle='popover']").popover({})});
+$(function(){$("form.confirm-form").submit(function(){var e=this;event.preventDefault();bootbox.confirm("Are you sure?",function(t){t&&e.submit()})});$("[data-toggle='tooltip']").tooltip({selector:"",container:"body"})});

@@ -14,7 +14,7 @@ Add Payment
             <li class="list-group-item">
                   <span class="pull-right">
                       @if ($payment['comment'])
-                      <a href="#" class="btn btn-link" data-toggle="popover" data-placement="left" data-content="{{{ $payment['comment'] }}}"><i class="fa fa-info-circle fa-fw"></i></a>
+                      <a href="#" class="btn btn-link" data-toggle="tooltip" data-placement="left" data-title="{{{ $payment['comment'] }}}"><i class="fa fa-info-circle fa-fw"></i></a>
                       @endif
                       {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="fa fa-edit fa-fw"></i>', $payment['id'], array('class' => '') ) ) }}
                       {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="fa fa-trash-o fa-fw"></i>', ['class' => 'form-inline'], ['class' => 'btn btn-link baseline']) }}

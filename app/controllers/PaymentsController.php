@@ -7,7 +7,8 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index() 
+	{
 		return View::make('payments.index');
 	}
 
@@ -16,12 +17,14 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function add() {
+	public function add() 
+	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 		return View::make('payments.add')->with('payers', $payers);
 	}
 
-	public function addReimbursement() {
+	public function addReimbursement() 
+	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
 		return View::make('payments.reimburse')->with('payers', $payers);
 	}
@@ -32,23 +35,26 @@ class PaymentsController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store() {
+	public function store() 
+	{
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
-		if ($validator->passes()) {
-
+		if ($validator->passes()) 
+		{
 			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 			$has_payer = false;
 		    //Prepare the join table data
-			foreach ($payers as $payer){
-				$sync_data[$payer->id] = array(
-					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
-					'pays'  => Input::has($payer->id . '-pays')
-					);
+			foreach ($payers as $payer)
+			{
+				$sync_data[$payer->id] = [
+				'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
+				'pays'  => Input::has($payer->id . '-pays'),
+				];
 				if ( Input::has($payer->id . '-pays') ) $has_payer = true;
 			}
 			//Ensure at least one person is a payer
-			if (!$has_payer) {
+			if (!$has_payer) 
+			{
 				return Redirect::route('payments.add')
 				->with('message', 'At least one person needs to be a payer')
 				->with('alert-class', 'alert-danger')
@@ -65,6 +71,8 @@ class PaymentsController extends BaseController {
 
 			//Save the amount each payer paid
 			$payment->payers()->sync($sync_data);
+
+			Payment::clearPaymentCaches();
 			
 			return Redirect::route('payments.statement')
 			->with('message', 'Payment Added!')
@@ -75,30 +83,34 @@ class PaymentsController extends BaseController {
 		->withErrors($validator)->withInput();
 	}
 
-	public function storeReimbursement() {
+	public function storeReimbursement()
+	{
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
-		if ($validator->passes()) {
+		if ($validator->passes())
+		{
 
-			if ( Input::get('from') === Input::get('to') ){
+			if ( Input::get('from') === Input::get('to') )
+			{
 				return Redirect::route('payments.reimburse')
 				->with('message', 'A payer cannot reimburse themself')
 				->with('alert-class', 'alert-danger');
 			}
-			if( !Input::get('amount') ){
+			if( !Input::get('amount') )
+			{
 				return Redirect::route('payments.reimburse')
 				->with('message', 'Please enter an amount')
 				->with('alert-class', 'alert-danger');
 			}
 
-			$sync_data[Input::get('from')] = array(
-				'amount' => Input::get('amount'),
-				'pays'	=> 1,
-				);
-			$sync_data[Input::get('to')] = array(
-				'amount' => -Input::get('amount'),
-				'pays'	=> 1,
-				);
+			$sync_data[Input::get('from')] = [
+			'amount' => Input::get('amount'),
+			'pays'	=> 1,
+			];
+			$sync_data[Input::get('to')] = [
+			'amount' => -Input::get('amount'),
+			'pays'	=> 1,
+			];
 			
       // validation has passed, save payment in DB
 			$payment = new Payment;
@@ -110,6 +122,8 @@ class PaymentsController extends BaseController {
 			//Save the amount each payer paid
 			$payment->payers()->sync($sync_data);
 			
+			Payment::clearPaymentCaches();
+
 			return Redirect::route('payments.statement')
 			->with('message', 'Reimbursement Added!')
 			->with('alert-class', 'alert-success');
@@ -125,7 +139,8 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id) {
+	public function show($id)
+	{
 		return View::make('payments.show');
 	}
 
@@ -135,10 +150,11 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function delete(Payment $payment) {
-
+	public function delete(Payment $payment) 
+	{
 		PayerPayment::where('payment_id', '=', $payment->id)->delete();
 		$payment->delete();
+
 		return Redirect::route('payments.statement')
 		->with('message', 'Payment Deleted')
 		->with('alert-class', 'message-success');
@@ -150,7 +166,8 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit(Payment $payment) {
+	public function edit(Payment $payment) 
+	{
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 		$payer_payments = PayerPayment::where('payment_id', '=', $payment->id)->get();
 		
@@ -161,10 +178,12 @@ class PaymentsController extends BaseController {
 		->where('payer_payment.payment_id', '=', $payment->id)
 		->groupBy('user_id')
 		->get();
-		if(isset($payment_user[0])){
+		if(isset($payment_user[0]))
+		{
 			// ensure the currently logged in user is alowed to edit this. 
-			// There must be a better way to acheive this
-			if ($payment_user[0]->user_id !== Auth::user()->id){
+			// There must be a better way to achieve this
+			if ($payment_user[0]->user_id !== Auth::user()->id)
+			{
 				return Redirect::route('payments.statement')
 				->with('message', 'You can\'t edit this payment as you\'re not the correct user.')
 				->with('alert-class', 'alert-danger');
@@ -172,7 +191,8 @@ class PaymentsController extends BaseController {
 		}
 
 		$pps = array();
-		foreach ($payer_payments as $payer_payment){
+		foreach ($payer_payments as $payer_payment)
+		{
 			$pps[$payer_payment->payer_id] = array(
 				'amount' => $payer_payment->amount,
 				'pays'	=> $payer_payment->pays,
@@ -192,15 +212,17 @@ class PaymentsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($payment) {
+	public function update($payment) 
+	{
 		$validator = Validator::make(Input::all(), Payment::$rules);
 
-		if ($validator->passes()) {
-
+		if ($validator->passes()) 
+		{
 		    //Prepare the join table data
 			$payers = Payer::where('user_id', '=', Auth::user()->id)->get();
 			$has_payer = false;
-			foreach ($payers as $payer){
+			foreach ($payers as $payer)
+			{
 				$sync_data[$payer->id] = array(
 					'amount'=> Input::has($payer->id . '-amount') ? Input::get($payer->id . '-amount') : 0,
 					'pays'  => Input::has($payer->id . '-pays')
@@ -208,7 +230,8 @@ class PaymentsController extends BaseController {
 				if ( Input::has($payer->id . '-pays') ) $has_payer = true;
 			}
 			//Ensure at least one person is a payer
-			if (!$has_payer) {
+			if (!$has_payer) 
+			{
 				return Redirect::route('payments.edit', array($payment->id))
 				->with('message', 'At least one person needs to be a payer')
 				->with('alert-class', 'alert-danger')
@@ -225,6 +248,8 @@ class PaymentsController extends BaseController {
 			//Save the amount each payer paid
 			$payment->payers()->sync($sync_data);
 			
+			Payment::clearPaymentCaches();
+
 			return Redirect::route('payments.statement')
 			->with('message', 'Payment Edited!')
 			->with('alert-class', 'alert-success');
@@ -238,24 +263,26 @@ class PaymentsController extends BaseController {
 
 	}
 
-	public function statement() {
-
-		$payments = Payment::getPayments(Input::get('from', null), Input::get('to', null));
-
+	public function statement() 
+	{
+		$start_date = Input::get('from', null);
+		$end_date = Input::get('to', null);
+		$payments = Payment::getPayments($start_date, $end_date);
 
 		$totals = array();
 		$settles = array();
 		$payers = Payer::where('user_id', '=', Auth::user()->id)->lists('name', 'id');
 
-		if ( $payments ) {
+		if ( $payments ) 
+		{
 			$payment_data = Payment::process_payment($payments->toArray());
-
 			$totals = Payment::payer_summary(Auth::user()->id);
 			$settles = Helper::settleUp($totals);
 		} else {
 			$payment_data = array();
 			//Display a message if there are no payers or payments. Payers need to be added first so we'll show that before.
-			if ( !$payers ){
+			if ( !$payers )
+			{
 				Session::flash('message', 'There are no payers. ' . HTML::linkRoute('payers.add', 'Add one') );
 			} else {
 				Session::flash('message', 'There are no payments. ' . HTML::linkRoute('payments.add', 'Add one') );
@@ -269,10 +296,15 @@ class PaymentsController extends BaseController {
 		->with(compact('payers'))
 		->with(compact('settles'));
 	}
+
+	/**
+	 * Show a list of payments summarising each
+	 */
 	public function summary()
 	{
 		$payments = Payment::getPayments(Input::get('from', null), Input::get('to', null));
-		if ( $payments ) {
+		if ( $payments ) 
+		{
 			$payment_data = Payment::process_payment($payments->toArray());
 
 		} else {

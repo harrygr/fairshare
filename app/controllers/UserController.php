@@ -15,7 +15,8 @@ class UserController extends BaseController {
      * Displays the form for account creation
      *
      */
-    public function create() {
+    public function create() 
+    {
         if (Auth::check())
         {
             return Redirect::back()
@@ -24,17 +25,20 @@ class UserController extends BaseController {
         }
         return View::make('users.register');
     }
+    
     /**
      * Displays the form for account editing
      *
      */
-    public function edit() {
+    public function edit() 
+    {
         $user = Auth::user();
         return View::make('users.edit')
         ->with(compact('user'));
     }
 
-    public function update(User $user){
+    public function update(User $user)
+    {
 
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
@@ -60,7 +64,8 @@ class UserController extends BaseController {
      * Stores new account
      *
      */
-    public function store() {
+    public function store() 
+    {
         //$validator = Validator::make(Input::all(), User::$rules);
 
         $user = new User;
@@ -77,8 +82,8 @@ class UserController extends BaseController {
         // Save if valid. Password field will be hashed before save
         $user->save();
 
-        if ( $user->id ) {
-
+        if ( $user->id ) 
+        {
             $message = Lang::get('confide::confide.alerts.account_created') . ' ' . Lang::get('confide::confide.alerts.instructions_sent'); 
 
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
@@ -86,16 +91,12 @@ class UserController extends BaseController {
             ->with( 'message', $message )
             ->with('alert-class', 'alert-success');
         } else {
-
             // Get validation errors (see Ardent package)
             $error = $user->errors()->all(':message');
-            //$error = '<ul><li>' . implode('</li><li>', $error) . '</li></ul>';
 
             return Redirect::action('UserController@create')
             ->withInput(Input::except('password'))
             ->withErrors($error);
-
-
         }
     }
 
@@ -103,8 +104,10 @@ class UserController extends BaseController {
      * Displays the login form
      *
      */
-    public function login() {
-        if( Confide::user() ) {
+    public function login() 
+    {
+        if( Confide::user() ) 
+        {
             // If user is logged, redirect to internal 
             // page, change it to '/admin', '/dashboard' or something
             return Redirect::to('/');
@@ -118,7 +121,8 @@ class UserController extends BaseController {
      * Attempt to do login
      *
      */
-    public function do_login() {
+    public function do_login() 
+    {
         $input = array(
             'email'    => Input::get( 'username' ), // May be the username too
             'username' => Input::get( 'username' ), // so we have to pass both
@@ -130,7 +134,8 @@ class UserController extends BaseController {
         // with the second parameter as true.
         // logAttempt will check if the 'email' perhaps is the username.
         // Get the value from the config file instead of changing the controller
-        if ( Confide::logAttempt( $input, Config::get('confide::signup_confirm') ) ) {
+        if ( Confide::logAttempt( $input, Config::get('confide::signup_confirm') ) ) 
+        {
             // Redirect the user to the URL they were trying to access before
             // caught by the authentication filter IE Redirect::guest('user/login').
             // Otherwise fallback to '/'
@@ -165,16 +170,15 @@ class UserController extends BaseController {
      *
      * @param  string  $code
      */
-    public function confirm( $code ) {
+    public function confirm( $code ) 
+    {
         if ( Confide::confirm( $code ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
             return Redirect::action('UserController@login')
             ->with( 'message', $notice_msg )
             ->with( 'alert-class', 'alert-success');
-        }
-        else
-        {
+        } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
             return Redirect::action('UserController@login')
             ->with( 'error', $error_msg )
@@ -186,7 +190,8 @@ class UserController extends BaseController {
      * Displays the forgot password form
      *
      */
-    public function forgot_password() {
+    public function forgot_password() 
+    {
         return View::make('users.forgot');
     }
 
@@ -194,8 +199,10 @@ class UserController extends BaseController {
      * Attempt to send change password link to the given email
      *
      */
-    public function do_forgot_password() {
-        if( Confide::forgotPassword( Input::get( 'email' ) ) ) {
+    public function do_forgot_password() 
+    {
+        if( Confide::forgotPassword( Input::get( 'email' ) ) ) 
+        {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
             return Redirect::action('UserController@login')
             ->with( 'message', $notice_msg );
@@ -212,7 +219,8 @@ class UserController extends BaseController {
      * Shows the change password form with the given token
      *
      */
-    public function reset_password( $token ) {
+    public function reset_password( $token ) 
+    {
         return View::make('users.reset')
         ->with('token', $token);
     }
@@ -221,11 +229,12 @@ class UserController extends BaseController {
      * Attempt change password of the user
      *
      */
-    public function do_reset_password() {
+    public function do_reset_password() 
+    {
         $input = array(
-            'token'=>Input::get( 'token' ),
-            'password'=>Input::get( 'password' ),
-            'password_confirmation'=>Input::get( 'password_confirmation' ),
+            'token'                 => Input::get( 'token' ),
+            'password'              => Input::get( 'password' ),
+            'password_confirmation' => Input::get( 'password_confirmation' ),
             );
 
         // By passing an array with the token, password and confirmation
@@ -248,26 +257,26 @@ class UserController extends BaseController {
      * Log the user out of the application.
      *
      */
-    public function logout() {
+    public function logout() 
+    {
         Confide::logout();
         
         return Redirect::to('/');
     }
 
-    public function dashboard() {
-
+    public function dashboard() 
+    {
         $payers = Auth::user()->payers()->lists('name', 'id');
-        $totals = array();
-        $settles = array();
-        if ( count($payers) ){
+        $totals = [];
+        $settles = [];
+        if ( count($payers) )
+        {
             $totals = Payment::payer_summary(Auth::user()->id);
             $settles = Helper::settleUp($totals);
         }
 
         return View::make('users.dashboard')
-        ->with(compact('totals'))
-        ->with(compact('settles'))
-        ->with(compact('payers'));
-    }
+        ->with(compact(['totals', 'settles', 'payers',]));
+        }
 
 }

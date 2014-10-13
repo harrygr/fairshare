@@ -15,7 +15,7 @@ Statement
     <table id="statement" class='table table-condensed table-striped' style='font-size:85%;'>
       <thead>
         <tr>
-          <th colspan='4'></th>
+          <th colspan='4' class=""></th>
           @foreach ($payers as $payer_id => $payer)
           <th colspan='3' id="payer-{{ $payer_id }}">{{ $payer }}</th>
           @endforeach
@@ -23,7 +23,7 @@ Statement
         <tr>
           <th class="statement-actions">Action</th>
           <th>Date</th>
-          <th>Company</th>
+          
           <th>Item</th>
           <?php $shaded = true; ?>
           @foreach ($payers as $payer)
@@ -38,18 +38,18 @@ Statement
       <tbody>
         @foreach ($payment_data as $payment)
         <tr>
-          <td class="statement-actions">
+          <td class="statement-actions ">
             <div class="action-cell">
               {{ HTML::decode(HTML::linkRoute('payments.edit', '<i class="fa fa-edit"></i>', $payment['id'], array('class' => 'btn btn-link') ) ) }}
               {{ Helper::deleteResource(array('payments.delete', $payment['id']), '<i class="fa fa-trash-o"></i>') }}
               @if ($payment['comment'])
-              <a href="#" class="btn btn-link" data-toggle="popover" data-placement="right" data-content="{{{ $payment['comment'] }}}"><i class="fa fa-info-circle"></i></a>
+              <a href="#" class="btn btn-link" data-toggle="tooltip" data-placement="right" data-title="{{{ $payment['comment'] }}}"><i class="fa fa-info-circle"></i></a>
               @endif
             </div>
           </td>
-          <td class="date-cell"><time datetime="{{{ $payment['payment_date'] }}}">{{ $payment['payment_date'] }}</time></td>
-          <td>{{{ $payment['company'] }}}</td>
-          <td>{{{ $payment['item'] }}}</td>
+          <td class="date-cell "><time datetime="{{{ $payment['payment_date'] }}}">{{ $payment['payment_date'] }}</time></td>
+          <td class=""><h4>{{{ $payment['company'] }}}</h4> {{{ $payment['item'] }}}</td>
+          
           <?php $shaded = true; ?>
           @foreach ($payers as $payer_id => $payer)
           @if ( isset($payment['payers'][$payer_id]) )
@@ -69,7 +69,7 @@ Statement
       </tbody>
       <tfoot>
         <tr>
-         <th colspan="4" >Totals (all payments)</th>
+         <th colspan="3" >Totals (all payments)</th>
          <?php $shaded = true; ?>
          @foreach ($payers as $payer_id => $payer)
          @if ( isset($totals[$payer_id]) )
