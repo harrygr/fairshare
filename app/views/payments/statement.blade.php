@@ -15,7 +15,7 @@ Statement
     <table id="statement" class='table table-condensed table-striped table-bordered' style='font-size:85%;'>
       <thead>
         <tr>
-          <th></th> <th></th> <th></th> <th></th>
+          <th></th> <th></th> <th></th>
           @foreach ($payers as $payer_id => $payer)
           <th colspan='3' id="payer-{{ $payer_id }}">{{ $payer }}</th>
           @endforeach
