@@ -12,10 +12,10 @@ Statement
 
 <div class="col-md-12 overflow-scroll">
   <div class="table-responsive">
-    <table id="statement" class='table table-condensed table-striped' style='font-size:85%;'>
+    <table id="statement" class='table table-condensed table-striped table-bordered' style='font-size:85%;'>
       <thead>
         <tr>
-          <th colspan='4' class=""></th>
+          <th></th> <th></th> <th></th> <th></th>
           @foreach ($payers as $payer_id => $payer)
           <th colspan='3' id="payer-{{ $payer_id }}">{{ $payer }}</th>
           @endforeach
@@ -119,3 +119,25 @@ Statement
 
 @stop
 
+@section('scripts')
+<script>
+  $(function(){
+    var statement = $('#statement').DataTable( {
+        //scrollY:        "300px",
+        //scrollX:        true,
+        //scrollCollapse: true,
+        ordering:       false,
+        pageLength:     5
+    } );
+    new $.fn.dataTable.FixedColumns( statement, {
+        leftColumns: 3
+    } );
+
+    // $('#statement').DataTable({
+    //   'ordering': false,
+    //   'search': false
+    // });
+  });
+
+</script>
+@stop

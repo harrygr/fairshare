@@ -24,9 +24,12 @@
 </footer>
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js') }}
 {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'); }}
-{{ HTML::script('js/bootbox.min.js') }}
-{{ HTML::script('js/larpay.scripts.js'); }}
-
+{{-- HTML::script('js/bootbox.min.js') --}}
+{{-- HTML::script('//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js') --}}
+{{-- HTML::script('//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js') --}}
+{{ HTML::script('js/larpay.scripts-ck.js'); }}
+{{ HTML::style('//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css') }}
+@yield('scripts')
 <script>
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
