@@ -103,20 +103,25 @@ class PaymentsController extends BaseController {
 				->with('alert-class', 'alert-danger');
 			}
 
+			$amount = Input::get('amount');
 			$sync_data[Input::get('from')] = [
-			'amount' => Input::get('amount'),
+			'amount' => $amount,
 			'pays'	=> 1,
 			];
 			$sync_data[Input::get('to')] = [
-			'amount' => -Input::get('amount'),
+			'amount' => -$amount,
 			'pays'	=> 1,
 			];
+
+			$from = Payer::find(Input::get('from'));
+			$to = Payer::find(Input::get('to'));
+			$item = sprintf('%s from %s to %s', $amount, $from->name, $to->name);
 			
       // validation has passed, save payment in DB
 			$payment = new Payment;
 			$payment->payment_date = Input::get('payment_date');
 			$payment->company = Input::get('company');
-			$payment->item = Input::get('item');
+			$payment->item = $item;
 			$payment->save();
 
 			//Save the amount each payer paid
@@ -154,6 +159,7 @@ class PaymentsController extends BaseController {
 	{
 		PayerPayment::where('payment_id', '=', $payment->id)->delete();
 		$payment->delete();
+		Payment::clearPaymentCaches();
 
 		return Redirect::route('payments.statement')
 		->with('message', 'Payment Deleted')
