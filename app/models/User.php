@@ -18,7 +18,7 @@ class User extends ConfideUser {
  //   'password_confirmation'=>'required|alpha_num|between:6,50'
  //   );
 	public static $rules = array(
-		'username' => 'unique:users,username',
+		'username' => 'required|unique:users,username',
 		'email'    => 'required|email',
 		'password' => 'required|between:4,60|confirmed',
 		);

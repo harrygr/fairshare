@@ -92,11 +92,11 @@ class UserController extends BaseController {
             ->with('alert-class', 'alert-success');
         } else {
             // Get validation errors (see Ardent package)
-            $error = $user->errors()->all(':message');
+            $errors = $user->errors();
 
             return Redirect::action('UserController@create')
             ->withInput(Input::except('password'))
-            ->withErrors($error);
+            ->withErrors($errors);
         }
     }
 
